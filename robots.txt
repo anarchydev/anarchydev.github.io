@@ -1,0 +1,27 @@
+# anarchydev.games – wszystkie wyszukiwarki i asystenci AI mogą czytać całą stronę
+User-agent: *
+Allow: /
+
+# Asystenci AI (ChatGPT, Claude, Perplexity, Google Gemini) – jawnie dozwoleni
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://anarchydev.games/sitemap.xml

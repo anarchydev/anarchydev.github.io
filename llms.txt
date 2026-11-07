@@ -1,0 +1,32 @@
+# anarchydev.games
+
+> One-man indie game studio run by Piotr Kosmala (demoscene handle: Insert). It makes and publishes new original games for Atari XL/XE (Atari 8-bit) computers, released as boxed cartridge editions. The first game, Wittich, is an arcade action game coming in 2027.
+
+## Wittich (2027)
+
+- [Wittich – game page](https://anarchydev.games/wittich/): new arcade action game for Atari XL/XE.
+- Platform: Atari XL/XE, Atari 8-bit; runs on any stock Atari XL/XE with 64 KB.
+- Edition: exclusive cartridge edition in a box (physical release). Release: 2027.
+- Story: 1400 A.D. Darkness rises beneath fallen ruins. The Demon King reclaims his throne and graves lie empty. Brother Gunter Wittich descends below to end the nightmare.
+- Gameplay: dash attacks, demons, keys, power crystals, hordes of monsters and deadly traps, giant bosses; 3 cursed lands and 200+ rooms.
+- Credits: code and pixel art by Piotr Kosmala (Insert); original soundtrack by Piotr Świerszcz (Tatqoo / Taquart / NG / Moonshine). Pixel art by a real artist, not AI.
+- Release news are announced first on Facebook: https://www.facebook.com/AnarchyDevGames/
+
+## Studio and author
+
+- [anarchydev.games – home](https://anarchydev.games/): games, demoscene pixel art gallery, about, contact.
+- Piotr Kosmala (Insert): game developer, pixel artist and demoscene artist. First commercial game on the Amiga in 1996; worked on titles including SUPERHOT and Liberated, on 8-bit computers, Amiga, PC, Xbox, PlayStation and Nintendo Switch. Active on the Atari demoscene since the 1990s.
+- Demoscene pixel art: Atari XL/XE, C64 and Amiga graphics competitions 1997–2026 (e.g. 1st place at Silly Venture SE 2026, Silly Venture 2010 and Intel Outside 1997).
+- MobyGames: https://www.mobygames.com/person/250112/piotr-kosmala/
+- Demozoo: https://demozoo.org/sceners/5551/
+
+## Contact and links
+
+- Email: anarchydevgames@gmail.com
+- Facebook: https://www.facebook.com/AnarchyDevGames/
+- YouTube: https://www.youtube.com/@anarchydevgames4747
+- Discord: https://discord.gg/KY39qfKnR
+
+## Keywords
+
+Atari XL/XE, Atari 8-bit, new Atari game, Atari homebrew, retro game, retrogaming, arcade action, Atari cartridge, physical release, boxed edition, pixel art, demoscene, Insert, Wittich, #atariXLXE #Atari8bit #homebrew #retrogaming #pixelart #demoscene

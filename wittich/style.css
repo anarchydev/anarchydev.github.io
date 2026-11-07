@@ -1,0 +1,126 @@
+html,body{margin:0;padding:0} h1,h2,h3,p{margin:0} img{max-width:100%}
+
+@font-face{font-family:"Inter:Bold";src:url("fonts/inter-bold.woff2") format("woff2");font-style:normal;font-weight:700}
+@font-face{font-family:"Roboto Mono:Bold";src:url("fonts/roboto-mono.woff2") format("woff2");font-style:normal;font-weight:700}
+@font-face{font-family:"Roboto Mono:Regular";src:url("fonts/roboto-mono.woff2") format("woff2");font-style:normal;font-weight:400}
+@font-face{font-family:"Rubik:Bold";src:url("fonts/rubik.woff2") format("woff2");font-style:normal;font-weight:700}
+
+:root{color:#fff;background:#0a0a0a;scroll-behavior:smooth}
+@layer base{
+  body{background:#0a0a0a;color:#fff}
+  a{color:inherit;text-decoration:none}
+  button,a{font:inherit}
+}
+*{box-sizing:border-box}
+main{width:100%;min-height:100dvh;overflow:hidden;background:#0a0a0a}
+.nav{height:80px;padding:0 48px;border-bottom:1px solid #262626;display:flex;align-items:center;justify-content:space-between;font-family:"Rubik:Bold",sans-serif;font-size:13px;white-space:nowrap}
+.brand{font-size:19px;display:flex;align-items:center}.brand-logo{display:block;height:48px;width:auto}.nav-links{display:flex;gap:30px;margin:0 auto 0 40px}.nav-links a{font-size:16px} /* Jak menu na stronie głównej */.nav a{transition:color .2s}.nav a:hover{color:#dc4043}.nav-social{display:flex;gap:20px}.nav-social a{font-size:1.4rem;color:#dc4043}.nav-social a:hover{color:#fff}
+.hero{background:#000 url('../images/WittichHorizontalBackground1.png') center/cover no-repeat;padding:64px 120px 56px;display:flex;flex-direction:column;align-items:center;gap:32px}
+.eyebrow{display:flex;align-items:center;gap:14px;font:700 22px/1 "Rubik:Bold",sans-serif}.eyebrow i{display:block;width:7px;height:7px;background:#dc4043}
+.logo{display:block;width:min(1050px,90vw);height:auto}
+.logo-heading{margin:0;line-height:0;max-width:100%} /* h1 z logo gry – bez wpływu na wygląd */
+/* Góra strony: po lewej napis + logo + przyciski, po prawej pudełko */
+.hero-main{width:100%;max-width:1200px;display:flex;align-items:center;justify-content:center;gap:56px}
+.hero-copy{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:32px}
+.hero-copy .logo{width:100%;max-width:760px;filter:drop-shadow(0 5px 15px rgba(0,0,0,.5))} /* Cień jak pod logo w bannerze na stronie głównej */
+.hero-copy .hero-badges{justify-content:flex-start}
+.hero-box{display:block;height:auto;filter:drop-shadow(0 24px 40px rgba(0,0,0,.65))}
+.hero-box-desktop{flex:0 0 auto;width:clamp(240px,27vw,400px)}
+.hero-box-mobile{display:none}
+/* Znaczek COMING SOON – sam biały obrys, żeby nie wyglądał jak klikalny przycisk ze strony głównej */
+.release-badge{display:flex;align-items:center;gap:15px;padding:13px 28px;background:transparent;border:2px solid #fff;color:#fff;font:700 1.8rem/1.6 "Rubik:Bold",sans-serif;text-transform:uppercase}
+.release-icon{display:block;height:40px;width:auto}
+.release-text{display:flex;flex-direction:column;line-height:1.1}
+.release-sub{font-size:.5em;letter-spacing:2px;opacity:.85}
+/* Znaczek COMING SOON (biała ramka) + przycisk GET RELEASE NEWS na Facebooku (czerwony) */
+.hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+.release-icon-fa{font-size:40px;line-height:1}
+/* FB to przycisk (link) – czerwone tło jak przycisk na stronie głównej; po najechaniu biały z czerwonym tekstem */
+.fb-badge{background:#dc4043;border-color:#dc4043;transition:background-color .2s,border-color .2s,color .2s}
+.fb-badge:hover{background:#fff;border-color:#fff;color:#dc4043}
+.hardware-cta{display:flex;margin-top:12px} /* Ten sam przycisk pod napisami w sekcji REAL ATARI */
+.hardware-cta .fb-badge{width:min(448px,100%);max-width:none;justify-content:center} /* Ta sama szerokość co ramki w SVG powyżej */
+/* W czerwonej sekcji CTA przycisk w odwróconych kolorach, żeby nie zlał się z tłem */
+.cta .fb-badge{align-self:flex-start;background:#fff;border-color:#fff;color:#dc4043}
+.cta .fb-badge:hover{background:#000;border-color:#000;color:#fff}
+@media(max-width:768px){.release-badge{font-size:1.2rem;width:100%;max-width:250px}.hero-badges{flex-direction:column;align-items:center;width:100%;gap:14px}.hero-badges .release-badge,.cta-actions .release-badge{max-width:320px;padding:13px 20px;white-space:nowrap}.hero-copy .logo{width:min(280px,72vw)} /* Mniejsze logo WITTICH na telefonie */}
+.hero-meta{width:100%;padding-top:16px;display:flex;justify-content:space-between;color:#888;font:400 12px/1 "Roboto Mono:Regular",monospace}
+.premise{height:82px;padding:0 120px;display:flex;align-items:center;background:#dc4043;font:400 14px/1 "Roboto Mono:Regular",monospace}
+.section{padding:96px 120px;display:flex;flex-direction:column;gap:48px}
+.section-title{width:100%;display:flex;align-items:center;justify-content:space-between}.title-lockup{display:flex;align-items:center;gap:16px}
+.marker,.cta-kicker i{display:block;width:5px;height:34px;background:#dc4043}.section-title h2{font:700 32px/1.08 "Inter:Bold",sans-serif;letter-spacing:-.8px}
+.chapter{color:#dc4043;font:400 12px/1.5 "Roboto Mono:Regular",monospace;letter-spacing:1.5px}
+/* Historia na górze sekcji GAME */
+.story{display:flex;flex-direction:column;gap:20px;padding-bottom:48px;border-bottom:1px solid #262626}
+.story-year{color:#dc4043;font:700 26px/1 "Rubik:Bold",sans-serif;letter-spacing:1px}
+.story-lines{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}
+.story-hero{color:#dc4043} /* Imię bohatera na czerwono */
+.story-lines p{font:700 26px/1.3 "Rubik:Bold",sans-serif;text-transform:uppercase;letter-spacing:.5px}
+@media(max-width:900px){.story-lines{grid-template-columns:1fr;gap:24px}.story-lines p,.story-year{font-size:21px}}
+.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 24px}
+.feature{display:flex;flex-direction:column;gap:24px;min-width:0}/* Hasła SVG – zawsze proporcjonalnie, maks. rozmiar z projektu (588×164); w prawej kolumnie przy prawej krawędzi */
+.feature>img{display:block;width:min(588px,100%);height:auto;align-self:flex-start}
+.feature:nth-child(even)>img{align-self:flex-end}
+/* Zrzuty z gry – bez tła, przezroczyste rogi ekranu CRT pokazują tło strony */
+.media{width:100%;aspect-ratio:588/330.75}
+.media img{display:block;width:100%;height:100%;object-fit:contain}
+.world{padding-top:80px;padding-bottom:80px;background:#dc4043}.inverse .marker{background:#fff}.inverse .chapter{color:#fff}
+.world-grid{gap:24px}.hardware{background:#151515;border-bottom:1px solid #262626}
+.hardware-content{display:flex;align-items:center;gap:64px}.hardware-copy{flex:0 0 520px;width:520px;padding:24px 0;display:flex;flex-direction:column;gap:12px}
+.hardware-copy img{display:block;width:min(448px,100%);height:auto}/* Miejsce na obrazek po prawej (np. kartridż) – 16:9 jak pozostałe miejsca na obrazki */
+.cartridge-placeholder{flex:1;min-width:0;aspect-ratio:16/9}
+.cartridge-placeholder img{display:block;width:100%;height:100%;object-fit:cover}
+.craft{gap:40px}.credits{width:100%;display:flex;flex-direction:column;align-items:center;gap:18px}
+.credits img{display:block;width:min(1100px,100%);height:auto}
+/* Każda nazwa AnarchyDev prowadzi na stronę główną */
+.home-link{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;transition:color .2s}
+.home-link:hover{color:#dc4043}.cta .home-link:hover{color:#000}
+/* Autorzy – na podstawie sekcji About ze strony głównej */
+.authors{width:min(1100px,100%);margin:24px auto 0}
+.authors-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px;align-items:start}
+.author{padding-top:28px;border-top:1px solid #262626}
+.author-role{display:block;color:#dc4043;font:400 12px/1.5 "Roboto Mono:Regular",monospace;letter-spacing:1.5px}
+.author h3{margin:8px 0 4px;font:700 28px/1.08 "Inter:Bold",sans-serif;letter-spacing:-.6px}
+.author-alias{display:block;color:#888;font:400 13px/1.5 "Roboto Mono:Regular",monospace}
+.author p{margin-top:16px;color:#bbb;font:400 15px/1.7 "Roboto Mono:Regular",monospace}
+.cta{padding:72px 120px;background:#dc4043;display:flex;align-items:center;gap:80px}.cta-copy{flex:1;display:flex;flex-direction:column;gap:24px}
+.cta-kicker{display:flex;align-items:center;gap:16px;font:700 32px/1.08 "Inter:Bold",sans-serif;letter-spacing:-.8px}.cta-kicker i{background:#fff}
+.cta h2{font:700 60px/1.08 "Inter:Bold",sans-serif;letter-spacing:-.8px}.cta-copy p{font:400 16px/1.7 "Roboto Mono:Regular",monospace}
+.cta-actions{flex:none;display:flex;flex-direction:column;gap:20px}
+.cta-actions p{font:400 13px/1.7 "Roboto Mono:Regular",monospace}
+footer{padding:56px 120px 32px;background:#000}
+/* Duże logo AnarchyDev w stopce (jak na stronie głównej), prowadzi na stronę główną */
+.footer-logo-link{display:block;width:max-content;margin:0 auto 48px}.footer-logo{display:block;height:96px;width:auto}.socials{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.social{padding:24px;border:1px solid #262626;display:flex;align-items:center;justify-content:space-between;transition:border-color .2s}.social:hover{border-color:#dc4043}
+.social>span{display:flex;flex-direction:column;gap:10px}.social strong{font:700 18px/1 "Rubik:Bold",sans-serif}.social small{color:#bbb;font:400 12px/1 "Roboto Mono:Regular",monospace}
+.arrow{width:20px;height:20px}/* Krótka nota o prawach autorskich na samym dole – mały, przygaszony tekst */
+.legal{margin:24px auto 0;color:#555;font:400 11px/1.6 "Roboto Mono:Regular",monospace;max-width:900px;text-align:center}
+.footer-bottom{margin-top:40px;padding-top:40px;border-top:1px solid #262626;display:flex;justify-content:space-between;color:#888;font:400 12px/1 "Roboto Mono:Regular",monospace}.footer-bottom a{color:#bbb}
+@media(max-width:1100px){.nav-links{gap:18px;margin-left:25px}}
+@media(max-width:900px){
+  .nav{padding:0 24px}.nav-links{gap:18px;margin-left:25px}.hero{padding:56px 24px 40px}.eyebrow{font-size:15px}
+  .premise{padding:0 24px}.section{padding:64px 24px}.hardware-content,.cta{align-items:flex-start;flex-direction:column}
+  .hardware-copy{width:100%;flex:none}.cartridge-placeholder{width:100%;flex:none}.cta{padding:56px 24px;gap:40px}.cta h2{font-size:44px}.cta-kicker{font-size:24px}
+  footer{padding:48px 24px 28px}.socials{grid-template-columns:1fr}.credits{gap:12px}
+  .authors-list{grid-template-columns:1fr;gap:40px}.author h3{font-size:24px}
+}
+@media(max-width:600px){
+  .brand{font-size:15px}.hero{gap:24px}.eyebrow{font-size:12px}
+  .hero-meta{font-size:9px}.hero-meta span{display:none}.section-title{align-items:flex-end;gap:20px}.section-title h2{font-size:23px}.chapter{font-size:9px}
+  .feature-grid{grid-template-columns:1fr}.world-grid{grid-template-columns:1fr}.cta h2{font-size:36px}.cta-actions{width:100%}.footer-bottom{gap:24px;font-size:9px}
+  .download{right:12px;bottom:12px;padding:12px 14px}
+}
+/* Menu na telefonie – jak na stronie głównej: logo, pod nim menu, pod nim ikony */
+@media(max-width:768px){
+  .nav{height:auto;flex-direction:column;gap:12px;padding:15px 20px}
+  .nav-links{flex-wrap:wrap;justify-content:center;gap:10px 18px;margin:0;white-space:nowrap}
+}
+/* Góra strony na węższych ekranach: wszystko w kolumnie, pudełko między logo a przyciskami */
+@media(max-width:1100px){
+  .hero-main{flex-direction:column;gap:0}
+  .hero-copy{align-items:center}
+  .hero-copy .hero-badges{justify-content:center}
+  .hero-box-desktop{display:none}
+  /* Samo pudełko zajmuje lewe 522 z 692 px pliku (reszta to cień) – przesunięcie o 12.2% centruje pudełko */
+  .hero-box-mobile{display:block;width:min(300px,60vw);transform:translateX(12.2%)}
+}

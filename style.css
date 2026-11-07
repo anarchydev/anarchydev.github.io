@@ -1,0 +1,696 @@
+/* Custom Properties */
+:root {
+    --bg-color: #0a0a0a;
+    --bg-alt: #151515;        /* Tło co drugiej sekcji */
+    --games-bg: var(--accent-color); /* Czerwień sekcji Games i About */
+    --line-color: #262626;    /* Linia między sekcjami */
+    --tile-bg: #000000;
+    --text-color: #ffffff;
+    --text-muted: #bbbbbb;
+    --text-dim: #888888;
+    --accent-color: #DC4043;
+    --accent-hover: #e4666a;
+    --font-title: 'Rubik', sans-serif;
+    --font-text: 'Roboto Mono', monospace;
+    --header-h: 80px;
+    --gutter: 10px;           /* Odstęp między kafelkami i od krawędzi ekranu */
+    --edge: 20px;             /* Lewa krawędź nagłówków i tekstu */
+    --radius: 8px;            /* Zaokrąglenie rogów jak na zdjęciu w About */
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-h);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-text);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-title);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+/* Tekst tylko dla wyszukiwarek i czytników ekranu (np. nagłówek h1) */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* Layout */
+.container {
+    padding: 0 var(--gutter);
+}
+
+/* Sekcje z kafelkami – na całą szerokość */
+.container-full {
+    width: 100%;
+}
+
+/* Sekcje z tekstem – wyrównane do lewej */
+.container-text {
+    padding: 0 var(--edge);
+}
+
+.section-padding {
+    padding: 60px 0;
+    border-top: 1px solid var(--line-color);
+}
+
+/* Games i About – całe sekcje na czerwonym tle */
+.games-section,
+.about-section {
+    background-color: var(--games-bg);
+    border-top-color: var(--games-bg);
+}
+
+#games .section-title,
+#about .section-title {
+    border-left-color: #ffffff; /* Czerwony pasek byłby niewidoczny na czerwonym tle */
+}
+
+/* About: jasny tekst na czerwonym tle */
+#about .about-text p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+#about .about-text strong {
+    color: #ffffff;
+}
+
+#about .about-caption {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+#about .about-text a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+#about .about-text a:hover {
+    color: #000000; /* Czerwony hover byłby niewidoczny */
+}
+
+.section-title {
+    font-size: 2rem;
+    line-height: 1;
+    border-left: 5px solid var(--accent-color);
+    padding-left: 14px;
+    margin: 0 0 30px calc(var(--edge) - var(--gutter));
+}
+
+.section-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin: -18px 0 30px calc(var(--edge) - var(--gutter));
+}
+
+.container-text .section-title,
+.container-text .section-subtitle {
+    margin-left: 0;
+}
+
+/* Wyśrodkowane nagłówki: Games, Demoscene, About, Contact */
+#games .section-title,
+#demoscene .section-title,
+#about .section-title,
+#contact .section-title {
+    display: table;
+    margin: 0 auto 30px;
+}
+
+#demoscene .section-subtitle {
+    text-align: center;
+    margin: -18px auto 30px;
+    padding: 0 var(--edge);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: #fff;
+    padding: 14px 28px;
+    font-family: var(--font-title);
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+/* Header – cienki pasek: logo i menu po lewej, ikony po prawej */
+#main-header {
+    height: var(--header-h);
+    background-color: rgba(10, 10, 10, 0.92);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 48px;
+    border-bottom: 1px solid var(--line-color);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo-img {
+    height: 48px;
+    width: auto;
+    display: block;
+}
+
+/* Większe logo w stopce, pod sekcją Contact (2× logo w menu) */
+.footer-logo {
+    height: 96px;
+    width: auto;
+    display: block;
+    margin: 0 auto 30px;
+}
+
+.main-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.main-menu a {
+    font-family: var(--font-title);
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icons a {
+    font-size: 1.4rem;
+    color: var(--accent-color);
+}
+
+.social-icons a:hover {
+    color: #ffffff;
+}
+
+/* Banner */
+.banner-section {
+    height: 500px;
+    margin-top: var(--header-h); /* Tylko miejsce na przypięty pasek, bez marginesów */
+    background-color: var(--tile-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-image: url('images/WittichHorizontalBackground1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.game-logo {
+    height: 240px;
+    width: auto;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+}
+
+.banner-subtitle {
+    font-family: var(--font-title);
+    font-size: 1.5rem;
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.btn-banner {
+    background-color: var(--accent-color);
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-icon {
+    height: 40px;
+    width: auto;
+}
+
+/* Tekst przycisku: COMING SOON + mniejszy RELEASE 2027 pod spodem */
+.btn-banner-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.btn-banner-release {
+    font-size: 0.5em;
+    letter-spacing: 2px;
+    opacity: 0.85;
+}
+
+.btn-banner:hover {
+    background-color: #ffffff;
+    color: var(--accent-color);
+}
+
+.btn-banner:hover .btn-icon {
+    /* Zamienia białą ikonę na #DC4043 */
+    filter: brightness(0) saturate(100%) invert(35%) sepia(32%) saturate(4027%) hue-rotate(334deg) brightness(89%) contrast(93%);
+}
+
+/* Games Section – wyśrodkowane kafelki tej samej wielkości co małe w galerii */
+.games-full-width {
+    --cols: 5;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gutter);
+}
+
+.btn-game-blue {
+    width: calc((100% - (var(--cols) - 1) * var(--gutter)) / var(--cols));
+    display: block;
+    background-color: var(--tile-bg);
+    background-image: url('images/WittichButton1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    aspect-ratio: 7 / 5;
+    border-radius: var(--radius);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Pudełko gry w kafelku Games. Samo pudełko zajmuje lewe 522 z 692 px pliku (reszta to cień),
+   dlatego przesunięcie w poziomie to -37.8% zamiast -50% – wtedy pudełko stoi na środku kafelka */
+.game-box-img {
+    width: auto;
+    height: 78%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-37.8%, -50%);
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.6));
+    transition: transform 0.1s ease;
+    z-index: 2;
+}
+
+/* RELEASE 2027 – czerwony pasek na całą szerokość, pojawia się po najechaniu */
+.game-release {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    background-color: var(--accent-color);
+    color: #fff;
+    font-family: var(--font-title);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    padding: 6px 10px;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+    z-index: 3;
+}
+
+.btn-game-blue:hover .game-release {
+    opacity: 1;
+}
+
+/* Zaślepka na następną grę: przerywana ramka i delikatny napis */
+.game-placeholder {
+    width: calc((100% - (var(--cols) - 1) * var(--gutter)) / var(--cols));
+    aspect-ratio: 7 / 5;
+    border: 2px dashed rgba(255, 255, 255, 0.45);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Tytuł gry po najechaniu – te same plakietki co w galerii Demoscene */
+.btn-game-blue .demoscene-overlay {
+    z-index: 4;
+}
+
+.btn-game-blue:hover .demoscene-overlay {
+    opacity: 1;
+}
+
+.btn-game-blue:hover .game-box-img {
+    transform: translate(-37.8%, -50%) scale(1.03);
+}
+
+/* Demoscene Section – galeria z kafelkami różnej wielkości */
+.demoscene-section .container {
+    container-type: inline-size;
+}
+
+.demoscene-grid {
+    --cols: 5;
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    /* Wysokość rzędu = szerokość kolumny × 5/7 (proporcje grafik z Atari) */
+    grid-auto-rows: calc((100cqw - (var(--cols) - 1) * var(--gutter)) / var(--cols) * 5 / 7);
+    gap: var(--gutter);
+}
+
+.demoscene-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+    display: block;
+    background: var(--tile-bg);
+}
+
+/* Duży kafelek: 2 kolumny × 2 rzędy */
+.demoscene-item.tile-big {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.demoscene-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    image-rendering: pixelated; /* Ostre piksele przy powiększeniu */
+}
+
+.demoscene-item .badge-new {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    image-rendering: auto;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Podpis pojawia się po najechaniu, na ciemnych plakietkach */
+.demoscene-overlay {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    padding: 0 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    z-index: 2;
+}
+
+.demoscene-item:hover .demoscene-overlay {
+    opacity: 1;
+}
+
+.demoscene-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.demoscene-desc,
+.demoscene-title {
+    display: inline-block;
+    background: var(--bg-color);
+}
+
+.demoscene-desc {
+    order: 1;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    line-height: 1.4;
+    padding: 4px 8px;
+}
+
+.demoscene-title {
+    order: 2;
+    font-size: 1.3rem;
+    color: var(--accent-color);
+    letter-spacing: 1px;
+    padding: 4px 8px;
+    margin: 0;
+}
+
+/* About Section – zdjęcie po lewej, tekst po prawej, całość wyśrodkowana */
+.about-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 50px;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+.about-image-wrapper {
+    flex: 0 1 500px;
+}
+
+.about-figure {
+    width: 100%;
+    margin: 0;
+}
+
+.about-main-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated; /* Skalowanie metodą nearest – bez rozmycia */
+    pointer-events: none;
+    user-select: none;
+}
+
+.about-caption {
+    margin-top: 0.75rem;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.about-text {
+    flex: 0 1 700px;
+}
+
+.about-text p {
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+.about-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* Contact Section */
+.contact-text {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contact-text p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+.contact-text p + p {
+    margin-top: 1rem;
+}
+
+.contact-text a {
+    color: #ffffff;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.contact-text a:hover {
+    color: var(--accent-color);
+}
+
+/* Responsive Design */
+@media (max-width: 1100px) {
+    .header-left {
+        gap: 25px;
+    }
+
+    .main-menu ul {
+        gap: 18px;
+    }
+}
+
+@media (max-width: 992px) {
+    .about-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .about-text {
+        order: 1;
+        flex-basis: auto;
+    }
+
+    .about-image-wrapper {
+        order: 2;
+        flex-basis: auto;
+        width: 100%;
+        max-width: 500px;
+        align-self: center;
+    }
+}
+
+@media (max-width: 900px) {
+    .games-full-width {
+        --cols: 3;
+    }
+
+    /* Na węższych ekranach wszystkie kafelki są równe, żeby zachować kolejność bez dziur */
+    .demoscene-grid {
+        --cols: 2;
+    }
+
+    .demoscene-item.tile-big {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        scroll-padding-top: 0;
+    }
+
+    #main-header {
+        position: relative;
+        height: auto;
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px var(--edge);
+    }
+
+    .header-left {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .main-menu ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 18px;
+    }
+
+    .section-padding {
+        padding: 40px 0;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    .banner-section {
+        margin-top: 0;
+        height: auto;
+        min-height: 400px;
+        padding: 40px 20px;
+    }
+
+    .banner-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .game-logo {
+        height: auto;
+        max-height: 200px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .btn-banner {
+        font-size: 1.2rem;
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .demoscene-title {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .games-full-width {
+        --cols: 1;
+    }
+
+    .demoscene-grid {
+        --cols: 1;
+    }
+}

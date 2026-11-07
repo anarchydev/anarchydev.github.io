@@ -1,23 +1,317 @@
-<!doctype html>
-<html lang="en-US">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AnarchyDevGames</title>
-<link href="css/singlePageTemplate.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>anarchydev.games – New Atari XL/XE Games by Piotr Kosmala</title>
+
+    <!-- SEO: opis, adres kanoniczny, roboty -->
+    <meta name="description" content="Indie studio by Piotr Kosmala (Insert) making new games for Atari XL/XE 8-bit computers. Wittich, an arcade action game on cartridge, arrives in 2027.">
+    <meta name="keywords" content="Atari XL/XE, Atari 8-bit, new Atari game, Atari homebrew, retro game, retrogaming, Atari cartridge, physical release, boxed edition, pixel art, demoscene, Insert, Wittich, arcade action, atariXLXE">
+    <meta name="author" content="Piotr Kosmala">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://anarchydev.games/">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <!-- Ikony strony -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Podgląd przy udostępnianiu (Facebook, Discord, Messenger, X) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="anarchydev.games">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://anarchydev.games/">
+    <meta property="og:title" content="anarchydev.games – New Atari XL/XE Games">
+    <meta property="og:description" content="Indie studio by Piotr Kosmala (Insert) making new games for Atari XL/XE 8-bit computers. Wittich, an arcade action game on cartridge, arrives in 2027.">
+    <meta property="og:image" content="https://anarchydev.games/images/og-wittich.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Wittich boxed edition and cartridge for Atari XL/XE">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="anarchydev.games – New Atari XL/XE Games">
+    <meta name="twitter:description" content="Indie studio by Piotr Kosmala (Insert) making new games for Atari XL/XE 8-bit computers. Wittich, an arcade action game on cartridge, arrives in 2027.">
+    <meta name="twitter:image" content="https://anarchydev.games/images/og-wittich.jpg">
+
+    <!-- Dane strukturalne dla Google i AI: studio, autor, strona -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://anarchydev.games/#studio",
+      "name": "anarchydev.games",
+      "alternateName": [
+        "AnarchyDev Games",
+        "Anarchy Dev Games"
+      ],
+      "url": "https://anarchydev.games/",
+      "logo": "https://anarchydev.games/images/icon-512.png",
+      "description": "One-man indie game studio making and publishing new original games for Atari XL/XE (Atari 8-bit) computers, released on cartridge.",
+      "founder": {
+        "@id": "https://anarchydev.games/#piotr"
+      },
+      "email": "anarchydevgames@gmail.com",
+      "sameAs": [
+        "https://www.facebook.com/AnarchyDevGames/",
+        "https://www.youtube.com/@anarchydevgames4747",
+        "https://discord.gg/KY39qfKnR"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://anarchydev.games/#piotr",
+      "name": "Piotr Kosmala",
+      "alternateName": "Insert",
+      "jobTitle": "Game developer and pixel artist",
+      "url": "https://anarchydev.games/#about",
+      "description": "Game developer, pixel artist and demoscene artist (Insert). Making games since 1996, including SUPERHOT and Liberated. Active on the Atari demoscene since the 1990s.",
+      "knowsAbout": [
+        "Atari XL/XE",
+        "Atari 8-bit",
+        "pixel art",
+        "demoscene",
+        "game development"
+      ],
+      "sameAs": [
+        "https://www.mobygames.com/person/250112/piotr-kosmala/",
+        "https://demozoo.org/sceners/5551/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://anarchydev.games/#website",
+      "url": "https://anarchydev.games/",
+      "name": "anarchydev.games",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://anarchydev.games/#studio"
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- Google Fonts: Rubik for titles, Roboto Mono for text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Rubik:wght@700&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<!-- Main Container -->
 
-<table id="wrapper">
-  <tr>
-    <td>
-	<img src="images/anarchydevgames.png" width="422" height="25" alt=""/> 
-    </td>
-  </tr>
-</table>
+<body id="page-top">
+    <div id="top"></div>
+    <!-- Header -->
+    <header id="main-header">
+        <div class="header-left">
+            <div class="logo">
+                <img src="images/AnarchyDevLogo.png" alt="anarchydev.games logo" class="header-logo-img">
+            </div>
+            <nav class="main-menu">
+                <ul>
+                    <li><a href="#top">Home</a></li>
+                    <li><a href="#games">Games</a></li>
+                    <li><a href="#demoscene">Demoscene</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right social-icons">
+            <a href="https://www.facebook.com/AnarchyDevGames/" target="_blank" aria-label="Facebook"><i
+                    class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.youtube.com/@anarchydevgames4747" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://discord.gg/KY39qfKnR" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+        </div>
+    </header>
 
-<!-- Main Container Ends -->
+    <!-- Banner Section -->
+    <section id="home" class="banner-section">
+        <h1 class="visually-hidden">anarchydev.games – new original games for Atari XL/XE computers</h1>
+        <p class="banner-subtitle">A new original game for Atari XL/XE</p>
+        <img src="images/WittichLogo.png" alt="Wittich – new arcade action game for Atari XL/XE" class="game-logo">
+        <a href="wittich/" class="btn btn-banner">
+            <img src="images/AtariXlXEGame.svg" alt="Atari XL/XE Game" class="btn-icon">
+            <span class="btn-banner-text">
+                Coming Soon
+                <span class="btn-banner-release">Release 2027</span>
+            </span>
+        </a>
+    </section>
+
+    <!-- Games Section -->
+    <section id="games" class="games-section section-padding">
+        <div class="container container-full">
+            <h2 class="section-title">Games</h2>
+            <div class="games-full-width">
+                <a href="wittich/" class="btn-game-blue">
+                    <img src="wittich/images/box2.png" alt="Wittich – boxed edition for Atari XL/XE" class="game-box-img">
+                    <div class="demoscene-overlay">
+                        <div class="demoscene-info">
+                            <h3 class="demoscene-title">Wittich</h3>
+                            <p class="demoscene-desc">A new original game<br>for Atari XL/XE</p>
+                        </div>
+                    </div>
+                    <span class="game-release">Release 2027</span>
+                </a>
+                <div class="game-placeholder">More coming soon…</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demoscene Section -->
+    <section id="demoscene" class="demoscene-section section-padding">
+        <div class="container container-full">
+            <h2 class="section-title">Demoscene</h2>
+            <p class="section-subtitle">Selected pixel art works created for demoscene events Atari XL/XE, C64 and
+                Amiga (1997-2026)</p>
+            <div class="demoscene-grid">
+                <a href="https://demozoo.org/graphics/395416/" target="_blank" class="demoscene-item tile-big">
+                    <img src="images/NewTag.svg" alt="" class="badge-new">
+                    <img src="images/demoscene/Dive.png" alt="Dive – Atari XL/XE pixel art by Insert, 1st place at Silly Venture SE 2026">
+                    <div class="demoscene-overlay">
+                        <div class="demoscene-info">
+                            <h3 class="demoscene-title">Dive</h3>
+                            <p class="demoscene-desc">1st place at Silly Venture SE 2026<br>Atari XL/XE Graphics
+                                Competition</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://demozoo.org/graphics/394300/" target="_blank" class="demoscene-item tile-big">
+                    <img src="images/demoscene/whimsy.png" alt="Whimsy – pixel art by Insert, 5th place at Lost Party 2026">
+                    <div class="demoscene-overlay">
+                        <div class="demoscene-info">
+                            <h3 class="demoscene-title">Whimsy</h3>
+                            <p class="demoscene-desc">5th place at Lost Party 2026<br>Graphics Competition</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://demozoo.org/graphics/394298/" target="_blank" class="demoscene-item">
+                    <img src="images/demoscene/lick.png" alt="Lick – pixel art by Insert, 3rd place at Lost Party 2026">
+                    <div class="demoscene-overlay">
+                        <div class="demoscene-info">
+                            <h3 class="demoscene-title">Lick</h3>
+                            <p class="demoscene-desc">3rd place at Lost Party 2026<br>Graphics Competition</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://demozoo.org/graphics/128148/" target="_blank" class="demoscene-item">
+                    <img src="images/demoscene/pleasure.png" alt="Pleasure – Atari XL/XE pixel art by Insert, Silly Venture 2014">
+                    <div class="demoscene-overlay">
+                        <div class="demoscene-info">
+                            <h3 class="demoscene-title">Pleasure</h3>
+                            <p class="demoscene-desc">14th place at Silly Venture 2014 Atari XL/XE<br>Graphics
+                                Competition</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://demozoo.org/graphics/81619/" target="_blank" class="demoscene-item">
+                    <img src="images/demoscene/potwor.png" alt="Potwor – Atari XL/XE pixel art by Insert, 2nd place at Fortification 2013">
+                    <div class="demoscene-overlay">
+                        <div class="demoscene-info">
+                            <h3 class="demoscene-title">Potwor</h3>
+                            <p class="demoscene-desc">2nd place at Fortification 2013 Atari XL/XE<br>Graphics
+                                Competition</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://demozoo.org/graphics/56535/" target="_blank" class="demoscene-item tile-big">
+                    <img src="images/demoscene/vampire.png" alt="Vampire – Atari XL/XE pixel art by Insert, 1st place at Silly Venture 2010">
+                    <div class="demoscene-overlay">
+                        <div class="demoscene-info">
+                            <h3 class="demoscene-title">Vampire</h3>
+                            <p class="demoscene-desc">1st place at Silly Venture 2010 Atari XL/XE<br>Graphics
+                                Competition</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://demozoo.org/graphics/3159/" target="_blank" class="demoscene-item tile-big">
+                    <img src="images/demoscene/monsters.png" alt="Monsters – C64 pixel art by Insert, Breakpoint 2003">
+                    <div class="demoscene-overlay">
+                        <div class="demoscene-info">
+                            <h3 class="demoscene-title">Monsters</h3>
+                            <p class="demoscene-desc">5th place at Breakpoint 2003<br>C64 Graphics Competition</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://demozoo.org/graphics/35469/" target="_blank" class="demoscene-item">
+                    <img src="images/demoscene/znaw.png" alt="Znaw – pixel art by Insert, 1st place at Intel Outside 1997">
+                    <div class="demoscene-overlay">
+                        <div class="demoscene-info">
+                            <h3 class="demoscene-title">Znaw</h3>
+                            <p class="demoscene-desc">1st place at Intel Outside 1997<br>Graphics Competition</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section section-padding">
+        <div class="container container-text">
+            <h2 class="section-title">About</h2>
+            <div class="about-content">
+                <div class="about-image-wrapper">
+                    <figure class="about-figure">
+                        <img src="images/team.png" alt="Piotr Kosmala (Insert) with musician Piotr Świerszcz" class="about-main-image">
+                        <figcaption class="about-caption">With Piotr Świerszcz (on the right), one of the talented demoscene artists I work with. He created the music for Wittich.</figcaption>
+                    </figure>
+                </div>
+                <div class="about-text">
+                    <p><strong>anarchydev.games</strong> is a one-man studio run by me, Piotrek Kosmala. I <strong>create and publish new games for Atari 8-bit</strong> computers, crafted with the <strong>same care as modern releases</strong>. While I'm a one-man operation, <strong>I collaborate</strong> with many incredibly talented people from the demoscene, including <strong>Piotr Świerszcz</strong> (Tatqoo/Taquart/NG/Moonshine), who composed the music for WITTICH.</p>
+                    <p>My first commercial game came out on the Amiga in 1996. Since then I’ve worked on many titles in roles ranging from artist and developer to art director, on platforms from 8-bit computers and the Amiga to PC, Xbox, PlayStation and Nintendo Switch, including the hit <strong>SUPERHOT</strong> and the acclaimed <strong>Liberated</strong>.</p>
+                    <p>I’ve also been part of the <strong>Atari demoscene</strong> since the 1990s, known as <strong>Insert</strong>. I later spent time in the Amiga and PC scenes, and I’m still active in demoscene productions today.</p>
+                    <p>More of my work: <a href="https://www.mobygames.com/person/250112/piotr-kosmala/" target="_blank">MobyGames</a> · <a href="https://demozoo.org/sceners/5551/" target="_blank">Demozoo</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section section-padding">
+        <div class="container container-text">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-text">
+                <p>Want to follow new releases and updates? Like my <a
+                        href="https://www.facebook.com/AnarchyDevGames/" target="_blank">Facebook page</a>.</p>
+                <p>If you’d like to get in touch with me, the best way is an email to <a
+                        href="mailto:anarchydevgames@gmail.com">anarchydevgames@gmail.com</a><br>or a message on my <a
+                        href="https://discord.gg/KY39qfKnR" target="_blank">Discord server</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="padding: 40px 0; border-top: 1px solid #111; text-align: center;">
+        <div class="container">
+            <img src="images/AnarchyDevLogo.png" alt="AnarchyDev Games" class="footer-logo">
+            <div class="footer-social social-icons"
+                style="margin-bottom: 20px; font-size: 1.5rem; display: flex; justify-content: center; gap: 20px;">
+                <a href="https://www.facebook.com/AnarchyDevGames/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@anarchydevgames4747" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://discord.gg/KY39qfKnR" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+            </div>
+            <p style="color: #444;">&copy; 2026 anarchydev.games. All rights reserved.</p>
+        </div>
+    </footer>
+
 </body>
+
 </html>
