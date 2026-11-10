@@ -412,7 +412,7 @@ a:hover {
 }
 
 .demoscene-grid {
-    --cols: 5;
+    --cols: 4;
     display: grid;
     grid-template-columns: repeat(var(--cols), 1fr);
     /* Wysokość rzędu = szerokość kolumny × 5/7 (proporcje grafik z Atari) */
