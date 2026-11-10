@@ -250,7 +250,7 @@ a:hover {
     justify-content: center;
     align-items: center;
     position: relative;
-    background-image: url('images/WittichHorizontalBackground1.png');
+    background-image: url('images/WittichHorizontalBackground1.png?v=9b391a48');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -326,7 +326,7 @@ a:hover {
     width: calc((100% - (var(--cols) - 1) * var(--gutter)) / var(--cols));
     display: block;
     background-color: var(--tile-bg);
-    background-image: url('images/WittichButton1.png');
+    background-image: url('images/WittichButton1.png?v=e43399d5');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

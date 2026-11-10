@@ -8,6 +8,7 @@
   <meta name="robots" content="noindex, follow">
   <meta http-equiv="refresh" content="0; url=wittich/">
   <script>location.replace('wittich/' + location.hash);</script>
+<script>/* deploy: odświeżenie po nowej wersji */(function(){var v="b6b3391414a3";function c(){if(!window.fetch)return;fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d||!d.v||d.v===v)return;var k='site-reloaded-'+d.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1')}catch(e){return}location.reload()}).catch(function(){})}c();addEventListener('pageshow',function(e){if(e.persisted)c()})})();</script>
 </head>
 <body>
   <p>Wittich has moved: <a href="wittich/">anarchydev.games/wittich/</a></p>

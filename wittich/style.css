@@ -1,9 +1,9 @@
 html,body{margin:0;padding:0} h1,h2,h3,p{margin:0} img{max-width:100%}
 
-@font-face{font-family:"Inter:Bold";src:url("fonts/inter-bold.woff2") format("woff2");font-style:normal;font-weight:700}
-@font-face{font-family:"Roboto Mono:Bold";src:url("fonts/roboto-mono.woff2") format("woff2");font-style:normal;font-weight:700}
-@font-face{font-family:"Roboto Mono:Regular";src:url("fonts/roboto-mono.woff2") format("woff2");font-style:normal;font-weight:400}
-@font-face{font-family:"Rubik:Bold";src:url("fonts/rubik.woff2") format("woff2");font-style:normal;font-weight:700}
+@font-face{font-family:"Inter:Bold";src:url("fonts/inter-bold.woff2?v=d483e2c7") format("woff2");font-style:normal;font-weight:700}
+@font-face{font-family:"Roboto Mono:Bold";src:url("fonts/roboto-mono.woff2?v=52404673") format("woff2");font-style:normal;font-weight:700}
+@font-face{font-family:"Roboto Mono:Regular";src:url("fonts/roboto-mono.woff2?v=52404673") format("woff2");font-style:normal;font-weight:400}
+@font-face{font-family:"Rubik:Bold";src:url("fonts/rubik.woff2?v=3b7d0fe7") format("woff2");font-style:normal;font-weight:700}
 
 :root{color:#fff;background:#0a0a0a;scroll-behavior:smooth}
 @layer base{
@@ -15,7 +15,7 @@ html,body{margin:0;padding:0} h1,h2,h3,p{margin:0} img{max-width:100%}
 main{width:100%;min-height:100dvh;overflow:hidden;background:#0a0a0a}
 .nav{height:80px;padding:0 48px;border-bottom:1px solid #262626;display:flex;align-items:center;justify-content:space-between;font-family:"Rubik:Bold",sans-serif;font-size:13px;white-space:nowrap}
 .brand{font-size:19px;display:flex;align-items:center}.brand-logo{display:block;height:48px;width:auto}.nav-links{display:flex;gap:30px;margin:0 auto 0 40px}.nav-links a{font-size:16px} /* Jak menu na stronie głównej */.nav a{transition:color .2s}.nav a:hover{color:#dc4043}.nav-social{display:flex;gap:20px}.nav-social a{font-size:1.4rem;color:#dc4043}.nav-social a:hover{color:#fff}
-.hero{background:#000 url('../images/WittichHorizontalBackground1.png') center/cover no-repeat;padding:64px 120px 56px;display:flex;flex-direction:column;align-items:center;gap:32px}
+.hero{background:#000 url('../images/WittichHorizontalBackground1.png?v=9b391a48') center/cover no-repeat;padding:64px 120px 56px;display:flex;flex-direction:column;align-items:center;gap:32px}
 .eyebrow{display:flex;align-items:center;gap:14px;font:700 22px/1 "Rubik:Bold",sans-serif}.eyebrow i{display:block;width:7px;height:7px;background:#dc4043}
 .logo{display:block;width:min(1050px,90vw);height:auto}
 .logo-heading{margin:0;line-height:0;max-width:100%} /* h1 z logo gry – bez wpływu na wygląd */
