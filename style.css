@@ -694,3 +694,19 @@ a:hover {
         --cols: 1;
     }
 }
+
+/* Linki Privacy policy / Cookie settings w stopce */
+.footer-links {
+    margin-top: 10px;
+    color: #444;
+    font-size: 0.8rem;
+}
+
+.footer-links a {
+    color: #777;
+    text-decoration: underline;
+}
+
+.footer-links a:hover {
+    color: var(--text-color);
+}

@@ -124,3 +124,8 @@ footer{padding:56px 120px 32px;background:#000}
   /* Samo pudełko zajmuje lewe 522 z 692 px pliku (reszta to cień) – przesunięcie o 12.2% centruje pudełko */
   .hero-box-mobile{display:block;width:min(300px,60vw);transform:translateX(12.2%)}
 }
+
+/* Linki Privacy policy / Cookie settings w stopce */
+.footer-links{margin:12px auto 0;color:#555;font:400 11px/1.6 "Roboto Mono:Regular",monospace;text-align:center}
+.footer-links a{color:#888;text-decoration:underline}
+.footer-links a:hover{color:#fff}
