@@ -114,10 +114,10 @@
   </script>
   <!-- FontAwesome – te same ikony co na stronie głównej -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=538a1577">
+  <link rel="stylesheet" href="style.css?v=8d7fc59f">
   <!-- Google Analytics + baner zgody na cookies -->
   <script src="../analytics.js?v=cc8ead74" defer></script>
-<script>/* deploy: odświeżenie po nowej wersji */(function(){var v="82c0c09c923f";function c(){if(!window.fetch)return;fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d||!d.v||d.v===v)return;var k='site-reloaded-'+d.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1')}catch(e){return}location.reload()}).catch(function(){})}c();addEventListener('pageshow',function(e){if(e.persisted)c()})})();</script>
+<script>/* deploy: odświeżenie po nowej wersji */(function(){var v="03599d1a6b20";function c(){if(!window.fetch)return;fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d||!d.v||d.v===v)return;var k='site-reloaded-'+d.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1')}catch(e){return}location.reload()}).catch(function(){})}c();addEventListener('pageshow',function(e){if(e.persisted)c()})})();</script>
 </head>
 <body>
 <main id="top">
@@ -143,6 +143,29 @@
     <div class="hero-meta"><span>AN <a class="home-link" href="../">ANARCHYDEV GAMES</a> ORIGINAL</span><a href="#game">SCROLL TO DESCEND ↓</a></div>
   </header>
   <div class="premise">DASH. EXPLORE. DESCEND.</div>
+
+  <section class="section teaser" id="teaser">
+    <div class="section-title"><div class="title-lockup"><span class="marker"></span><h2>TEASER</h2></div><span class="chapter">00 / TRAILER</span></div>
+    <a class="teaser-video" href="https://youtu.be/y2IJnxeLMzQ" data-yt="y2IJnxeLMzQ" target="_blank" rel="noreferrer" aria-label="Play Wittich teaser trailer">
+      <img src="images/teaser.jpg?v=d6744b0e" alt="Wittich – teaser trailer for Atari XL/XE" loading="lazy">
+      <span class="teaser-play" aria-hidden="true"></span>
+      <span class="teaser-label">WATCH THE TEASER</span>
+    </a>
+  </section>
+  <script>
+    /* YouTube ładuje się dopiero po kliknięciu – wcześniej strona nie łączy się z Google. */
+    document.querySelectorAll('.teaser-video[data-yt]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + a.dataset.yt + '?autoplay=1&rel=0';
+        f.title = 'Wittich – teaser trailer';
+        f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        f.allowFullscreen = true;
+        a.replaceWith(f);
+      });
+    });
+  </script>
 
   <section class="section gameplay" id="game">
     <div class="section-title"><div class="title-lockup"><span class="marker"></span><h2>GAME</h2></div><span class="chapter">01 / GAMEPLAY</span></div>

@@ -83,7 +83,7 @@
 
     <!-- Google Analytics + baner zgody na cookies -->
     <script src="../analytics.js?v=cc8ead74" defer></script>
-<script>/* deploy: odświeżenie po nowej wersji */(function(){var v="82c0c09c923f";function c(){if(!window.fetch)return;fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d||!d.v||d.v===v)return;var k='site-reloaded-'+d.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1')}catch(e){return}location.reload()}).catch(function(){})}c();addEventListener('pageshow',function(e){if(e.persisted)c()})})();</script>
+<script>/* deploy: odświeżenie po nowej wersji */(function(){var v="03599d1a6b20";function c(){if(!window.fetch)return;fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d||!d.v||d.v===v)return;var k='site-reloaded-'+d.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1')}catch(e){return}location.reload()}).catch(function(){})}c();addEventListener('pageshow',function(e){if(e.persisted)c()})})();</script>
 </head>
 
 <body>
@@ -132,6 +132,10 @@
             <li><strong>Fonts and icons:</strong> fonts are loaded from Google Fonts and icons from cdnjs
                 (Cloudflare). Your browser connects to these servers to download them, which reveals your IP
                 address to them. They do not set cookies.</li>
+            <li><strong>YouTube video:</strong> the Wittich page shows a teaser video. Until you click play,
+                only a preview image stored on our site is shown and nothing is loaded from YouTube. After you
+                click, the player is loaded from YouTube (Google) in privacy-enhanced mode
+                (youtube-nocookie.com), and Google's privacy policy applies to it.</li>
             <li><strong>External links:</strong> links to Facebook, YouTube, Discord, Demozoo and others take you
                 to those sites, which have their own privacy policies.</li>
         </ul>

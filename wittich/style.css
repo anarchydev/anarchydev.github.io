@@ -129,3 +129,16 @@ footer{padding:56px 120px 32px;background:#000}
 .footer-links{margin:12px auto 0;color:#555;font:400 11px/1.6 "Roboto Mono:Regular",monospace;text-align:center}
 .footer-links a{color:#888;text-decoration:underline}
 .footer-links a:hover{color:#fff}
+
+/* Teaser YouTube pod paskiem DASH. EXPLORE. DESCEND. – odtwarzacz ładuje się dopiero po kliknięciu */
+.section.teaser{padding-bottom:0}
+.teaser-video,.teaser iframe{position:relative;display:block;width:100%;aspect-ratio:16/9;border:1px solid #262626;background:#000}
+.teaser iframe{border:0}
+.teaser-video img{display:block;width:100%;height:100%;object-fit:cover}
+.teaser-play{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;background:#dc4043;transition:transform .2s,background .2s}
+.teaser-play::after{content:"";position:absolute;left:34px;top:26px;border-style:solid;border-width:16px 0 16px 26px;border-color:transparent transparent transparent #fff}
+.teaser-label{position:absolute;left:24px;bottom:20px;font:400 14px/1 "Roboto Mono:Regular",monospace;letter-spacing:1px;color:#fff;opacity:.8}
+.teaser-video:hover .teaser-play,.teaser-video:focus-visible .teaser-play{transform:scale(1.08);background:#e85457}
+.teaser-video:focus-visible{outline:2px solid #dc4043;outline-offset:4px}
+@media(max-width:900px){.section.teaser{padding-bottom:0}}
+@media(max-width:600px){.teaser-play{width:64px;height:64px;margin:-32px 0 0 -32px}.teaser-play::after{left:26px;top:20px;border-width:12px 0 12px 20px}.teaser-label{left:14px;bottom:12px;font-size:10px}}
