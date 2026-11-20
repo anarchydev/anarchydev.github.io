@@ -710,3 +710,9 @@ a:hover {
 .footer-links a:hover {
     color: var(--text-color);
 }
+
+/* Adres e-mail zapisany słownie (bez linku mailto – trudniejszy do zebrania przez boty) */
+.email-masked {
+    color: var(--text-color);
+    white-space: nowrap;
+}
