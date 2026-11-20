@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en" data-title-en="Anarchy in 114 Cycles – how I make Atari XL/XE graphics in Aseprite | anarchydev.games" data-title-pl="Anarchia w 114 cyklach – jak robię grafikę na Atari XL/XE w Aseprite | anarchydev.games">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anarchy in 114 Cycles – how I make Atari XL/XE graphics in Aseprite | anarchydev.games</title>
+    <!-- Wersja PL jest na tej samej stronie pod przełącznikiem (adres z #pl) – ustawiamy ją przed wyświetleniem -->
+    <script>if (location.hash === '#pl') document.documentElement.classList.add('lang-pl');</script>
+
+    <!-- SEO -->
+    <meta name="description" content="Five colours on screen, sprites moved on the fly and 114 cycles per line. How I draw Atari XL/XE graphics in Aseprite with my own plugin, AnarchyPixel. Also in Polish.">
+    <meta name="author" content="Piotr Kosmala (Insert/Anarchydev)">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://anarchydev.games/devlog/anarchy-in-114-cycles/">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <!-- Ikony strony -->
+    <link rel="icon" href="/favicon.ico?v=e1b9aa14" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png?v=d7dcf92a">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=a45a132c">
+
+    <!-- Podgląd przy udostępnianiu -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="anarchydev.games">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="pl_PL">
+    <meta property="og:url" content="https://anarchydev.games/devlog/anarchy-in-114-cycles/">
+    <meta property="og:title" content="Anarchy in 114 Cycles – how I make Atari XL/XE graphics">
+    <meta property="og:description" content="Five colours on screen, sprites moved on the fly and 114 cycles per line. How I draw Atari XL/XE graphics in Aseprite.">
+    <meta property="og:image" content="https://anarchydev.games/devlog/DevlogArticlePicture01.png">
+    <meta property="og:image:width" content="1400">
+    <meta property="og:image:height" content="1000">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Dane strukturalne: artykuł -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Anarchy in 114 Cycles – how I make Atari XL/XE graphics in Aseprite",
+  "alternativeHeadline": "Anarchia w 114 cyklach – jak robię grafikę na Atari XL/XE w Aseprite",
+  "inLanguage": ["en", "pl"],
+  "url": "https://anarchydev.games/devlog/anarchy-in-114-cycles/",
+  "image": "https://anarchydev.games/devlog/DevlogArticlePicture01.png",
+  "author": { "@id": "https://anarchydev.games/#piotr", "@type": "Person", "name": "Piotr Kosmala", "alternateName": "Insert" },
+  "publisher": { "@id": "https://anarchydev.games/#studio", "@type": "Organization", "name": "anarchydev.games" },
+  "about": ["Atari XL/XE", "pixel art", "Aseprite", "demoscene"]
+}
+    </script>
+
+    <!-- Google Fonts i ikony – te same co na stronie głównej -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Rubik:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="/style.css?v=d135a2b0">
+    <link rel="stylesheet" href="/devlog/devlog.css?v=7b8cb292">
+    <script src="/devlog/lang.js?v=7245b912" defer></script>
+
+    <!-- Google Analytics + baner zgody na cookies -->
+    <script src="/analytics.js?v=5c7e90a2" defer></script>
+<script>/* deploy: odświeżenie po nowej wersji */(function(){var v="9d2afae57517";function c(){if(!window.fetch)return;fetch('/version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d||!d.v||d.v===v)return;var k='site-reloaded-'+d.v;try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1')}catch(e){return}location.reload()}).catch(function(){})}c();addEventListener('pageshow',function(e){if(e.persisted)c()})})();</script>
+</head>
+
+<body id="page-top" data-content-group="devlog">
+    <!-- Header – ten sam co na stronie głównej -->
+    <header id="main-header">
+        <div class="header-left">
+            <div class="logo">
+                <a href="/"><img src="/images/AnarchyDevLogo.png?v=8005fb1b" alt="anarchydev.games logo" class="header-logo-img"></a>
+            </div>
+            <nav class="main-menu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#games">Games</a></li>
+                    <li><a href="/#demoscene">Demoscene</a></li>
+                    <li><a href="/devlog/" class="active">Devlog</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right social-icons">
+            <a href="https://www.facebook.com/AnarchyDevGames/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.youtube.com/@anarchydevgames4747" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://discord.gg/da7KRVg4D2" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+        </div>
+    </header>
+
+    <header class="page-banner">
+        <span class="banner-kicker">Devlog</span>
+        <h1><span class="i18n" lang="en">Anarchy in&nbsp;114&nbsp;Cycles</span><span class="i18n" lang="pl">Anarchia w&nbsp;114&nbsp;cyklach</span></h1>
+        <p class="banner-lead"><span class="i18n" lang="en">How I make Atari XL/XE graphics <strong>for Wittich and for demoscene parties</strong></span><span class="i18n" lang="pl">Jak robię grafikę na Atari XL/XE <strong>do gry Wittich i na eventy demoscenowe</strong></span></p>
+        <div class="article-meta">
+            <span><span class="i18n" lang="en">By</span><span class="i18n" lang="pl">Autor:</span> <strong>Insert/Anarchydev</strong></span>
+        </div>
+        <div class="lang-switch" role="group" aria-label="Language / Język">
+            <button type="button" data-set-lang="en" lang="en">English</button>
+            <button type="button" data-set-lang="pl" lang="pl">Polski</button>
+        </div>
+    </header>
+
+    <main class="article" data-track-article-body="anarchy-in-114-cycles">
+        <div class="i18n" lang="en">
+            <section class="chapter">
+                <p>I made <strong>AnarchyPixel</strong> – an extension for <a href="https://aseprite.org/" target="_blank" rel="noreferrer">Aseprite</a> – because I needed full-screen graphics for our game
+                    <a href="/wittich/">Wittich</a>. It quickly turned out to work just as well for demoscene party compos, so now
+                    I use it for both.</p>
+
+                <p>The problem in short: the Atari 8-bit has 128 colours in its palette, but in the mode that's actually
+                    usable for drawing, you get five on screen at once. If you want more, you have to swap them while the
+                    picture is being drawn, for example every character row, which is eight lines. Of course ANTIC has many more modes, but they're mostly
+                    used for specific purposes.</p>
+
+                <p>For this kind of graphics (and not only this kind) there's been <a href="https://g2f.atari8.info/" target="_blank" rel="noreferrer">Graph2Font</a> by <strong>Tebe/MadTeam</strong>
+                    for years. Great tool, lots of good work was made with it, and it's what inspired me. But honestly,
+                    I found it too hard to use (you can see it in <a href="https://demozoo.org/graphics/56535/" target="_blank" rel="noreferrer">my old picture from Silly Venture 2010</a>, where I tried
+                    changing the colour registers line by line). I wanted to draw in an editor I already know and leave counting registers
+                    and cycles to the computer.</p>
+
+                <p>That editor is <a href="https://aseprite.org/" target="_blank" rel="noreferrer">Aseprite</a>, which
+                    I think is the best pixel art editor out there. It has layers, an indexed palette, and you can write
+                    your own extensions for it. So I wrote one that teaches it about the Atari.</p>
+
+                <p>Below I explain how it works and take two pictures apart. In one, the sprites hide under the bitmap.
+                    In the other, they sit on top.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">01</span>
+                    <h2>Mode 4, or five colours</h2>
+                </div>
+
+                <img class="chapter-banner" src="/devlog/DevlogArticle01Picture001.png?v=6cac8ca2" width="1560" height="520" alt="Aseprite with AnarchyPixel: the Whimsy picture with row palettes on the left and the Atari layers on the right" loading="lazy">
+
+                <p>I draw in ANTIC mode 4 (GRAPHICS 12 in Basic). It's a character mode pretending to be a bitmap:
+                    160 × 192 wide pixels, a screen made of 40 × 24 characters, 4 × 8 pixels each.</p>
+
+                <p>Each character row has a background colour and four colours, but a single 4 × 8 cell can only show
+                    the background, two colours and one of the other two (the character's inverse bit picks which one).
+                    If you've ever drawn in this mode, you know the pain of needing the third and fourth colour in the
+                    same cell.</p>
+
+                <p>On top of that, a font has 128 characters and the screen has 960 cells. Every unique cell uses up
+                    another character, so with a detailed picture you also have to switch fonts row by row.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">02</span>
+                    <h2>Sprites</h2>
+                </div>
+
+                <p>Extra colours come from sprites, or PMG. There are 4 players, 8 pixels wide (you can stretch them to
+                    16 or 32), and 4 missiles, 2 pixels wide. Each player has one colour and each missile takes the
+                    colour of its player. But vertically a sprite runs down the whole screen and can have a different
+                    shape on every line.</p>
+
+                <p>Without extra tricks, that gives you up to 9 colours per row instead of 5. The catch is that a player is an
+                    8-pixel strip in one colour, so you can't really paint with it. What you can do is add colour exactly
+                    where the bitmap runs out.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">03</span>
+                    <h2>Moving sprites on the fly</h2>
+                </div>
+
+                <p>Eight strips for the whole screen isn't much, so you move the sprites while the picture is being
+                    drawn. A DLI interrupt at the end of a row does that: it changes sprite position, width and colour,
+                    and while it's at it, the bitmap colours, background, font and priority. In <strong>AnarchyPixel</strong> every player
+                    and every missile can be used once per row, so up to 24 times per screen.</p>
+
+                <p>Sounds great until you count the cycles.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">04</span>
+                    <h2>114 cycles</h2>
+                </div>
+
+                <p>The CPU gets 114 cycles per scanline. Part of that goes on just entering the interrupt, and on the
+                    first line of each row ANTIC fetches character data while the CPU mostly sits and waits. In practice
+                    you can change about 4–6 registers between rows. Not twenty.</p>
+
+                <p>The worst part is that when a change doesn't make it in time, nothing crashes. The sprite just stays
+                    in the old place for half a line, or the colour switches halfway across. You'll only see it in the
+                    emulator. So when you draw, you also have to think about when each pixel needs to show up.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">05</span>
+                    <h2>Aseprite + <strong>AnarchyPixel</strong></h2>
+                </div>
+
+                <img class="chapter-banner" src="/devlog/DevlogArticle01Picture002.png?v=690723c8" width="1560" height="520" alt="Aseprite with AnarchyPixel: the Dive picture with row palettes on the left and the Atari layers (bitmap, PMG players, missiles, Check) on the right" loading="lazy">
+
+                <p>One thing first: the plugin doesn't draw for me. It doesn't convert photos and doesn't generate
+                    anything. I placed every pixel in these pictures by hand. <strong>AnarchyPixel</strong> tells me what the Atari will
+                    show and what it won't, counts the cycles for me and turns the drawing into a program.</p>
+
+                <p>That's a different approach from Ilmenit's
+                    <a href="https://github.com/ilmenit/rastaconverter" target="_blank" rel="noreferrer">RastaConverter</a>.
+                    Rasta takes a finished image and searches for the best way to show it on the Atari, so the algorithm
+                    decides where the colours go. With my plugin I decide, and the plugin checks whether the hardware can
+                    handle it.</p>
+
+                <p>I draw on a 160 × 192 canvas with the Atari PAL palette. The plugin recognises layers by name:</p>
+
+                <table class="spec">
+                    <tr><th><code>background</code></th><td>background colour of each row</td></tr>
+                    <tr><th><code>bitmap</code></th><td>the actual picture (there can be several of these layers)</td></tr>
+                    <tr><th><code>pmg1..pmg4</code></th><td>players (<code>pmg1x2</code>, <code>pmg1x4</code> are the wider versions)</td></tr>
+                    <tr><th><code>missiles</code></th><td>all missiles on one layer</td></tr>
+                    <tr><th><code>Check</code></th><td>diagnostic overlay</td></tr>
+                </table>
+
+                <p>Then I use two keys:</p>
+
+                <div class="keys">
+                    <div class="key-card">
+                        <span class="keycap">F1</span>
+                        <h3>Check</h3>
+                        <p>The plugin runs the export in memory, simulates the Atari and compares the result with my
+                            drawing. Pixels that will come out different on the Atari get a magenta checkerboard, and every
+                            row gets a light: green, yellow or red. I fix things, hit F1 again, and keep going until
+                            everything is green.</p>
+                    </div>
+                    <div class="key-card">
+                        <span class="keycap">F3</span>
+                        <h3>Export to XEX</h3>
+                        <p>The plugin generates a Mad Pascal program (display list, DLIs, screen, fonts, sprites),
+                            compiles it with <a href="https://github.com/tebe6502/Mad-Pascal" target="_blank" rel="noreferrer">Mad Pascal</a>
+                            and <a href="https://github.com/tebe6502/Mad-Assembler" target="_blank" rel="noreferrer">MADS</a>
+                            and runs it in <a href="https://www.virtualdub.org/altirra.html" target="_blank" rel="noreferrer">Altirra</a>.
+                            That way I see the picture on the Atari while I'm working on it, not just at the end. You can
+                            also take the generated code and use it in your own game or demo.</p>
+                    </div>
+                </div>
+
+                <p>My favourite part is how the plugin handles missiles. I draw them all on one layer, in any colours,
+                    and in each row it splits them into hardware missiles and picks the width and colour. If there aren't
+                    enough missiles, it goes with the version that spoils the picture the least.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">06</span>
+                    <h2>Reading Check screenshots</h2>
+                </div>
+
+                <p>Most of the illustrations are Aseprite screenshots with the Check overlay on. On the left of each row
+                    there are small squares: the background colour and the colours that row uses on the Atari. If I used
+                    too many colours, the extra ones sit after a red line. On the right, each row has a light:</p>
+
+                <div class="lamps">
+                    <div class="lamp lamp-green"><i></i><b>Green</b><span>it will look exactly the same on the Atari as in Aseprite,</span></div>
+                    <div class="lamp lamp-yellow"><i></i><b>Yellow</b><span>some pixels may flicker between frames,</span></div>
+                    <div class="lamp lamp-red"><i></i><b>Red</b><span>something won't work, e.g. too many colours or the DLI runs out of time.</span></div>
+                </div>
+
+                <p>A magenta checkerboard on the picture marks a pixel that will look different on the Atari, and
+                    a yellow one marks a pixel that may differ in some frames. Screenshots of finished pictures show only
+                    green lights. On work-in-progress ones you'll see red too.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">07</span>
+                    <h2>Above or below the bitmap</h2>
+                </div>
+
+                <img class="chapter-banner" src="/devlog/DevlogArticle01Picture003.png?v=8d8c222a" width="1560" height="520" alt="Two Aseprite layer stacks: on the left the bitmap layer sits above the PMG layers (sprites under the bitmap), on the right the PMG layers sit above the bitmap (sprites on top)" loading="lazy">
+
+                <p>Sprites can be above the bitmap colours or below them (the PRIOR register). In <strong>AnarchyPixel</strong> I set
+                    this with layer order: a sprite above the bitmap covers the picture, and a sprite below the bitmap
+                    only shows where there's background. <strong>AnarchyPixel</strong> supports three setups per row: all
+                    sprites above, all below, or two pairs above and two below (a pair is a player and its missile).
+                    The hardware has one more, where the sprites sit between the bitmap colours, but the plugin doesn't
+                    use it. A DLI can change the setup every row. The two pictures below are the two extremes.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">08</span>
+                    <h2>Picture 1: sprites under the bitmap</h2>
+                </div>
+
+                <!-- ILLUSTRATIONS: replace .figure-slot with <img src="..." alt="..."> -->
+                <div class="figures">
+                    <figure><a href="/devlog/DevlogArticle01Picture004.png?v=6bf45343" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture004.png?v=6bf45343" width="1920" height="1152" alt="Picture 1, sprites only (PMG): blocks of colour that sit under the bitmap" loading="lazy"></a><figcaption><b>1a</b> Sprites only (PMG)</figcaption></figure>
+                    <figure><a href="/devlog/DevlogArticle01Picture005.png?v=643e1f8c" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture005.png?v=643e1f8c" width="1920" height="1152" alt="Picture 1, bitmap only, with holes in the background colour where the sprites show through" loading="lazy"></a><figcaption><b>1b</b> Bitmap only</figcaption></figure>
+                    <figure><a href="/devlog/DevlogArticle01Picture006.png?v=99f6f9fa" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture006.png?v=99f6f9fa" width="1920" height="1152" alt="Picture 1, all layers combined: the finished Atari XL/XE picture" loading="lazy"></a><figcaption><b>1c</b> All layers combined</figcaption></figure>
+                </div>
+
+                <p>Here all the sprites are under the bitmap, so you only see them where the bitmap has background. The
+                    bitmap draws the outlines and the sprites just fill the holes with colour. That's why the sprites on
+                    their own (1a) look like ugly blocks, and that's totally fine. The bitmap (1b) has holes exactly where
+                    the extra colour should go. Put together (1c), a row has more colours than mode 4 gives you, and you
+                    can't tell what shape the sprites are.</p>
+
+                <p>There are two traps. A bitmap pixel painted in its row's background colour counts as background for
+                    the Atari, so the sprite shows through it (Check catches that). And missiles that go under the bitmap
+                    I draw normally on top, where they should be visible, and only on export does the plugin cut holes in
+                    the bitmap under them. The .aseprite file stays untouched.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">09</span>
+                    <h2>Picture 2: sprites on top</h2>
+                </div>
+
+                <!-- ILLUSTRATIONS: replace .figure-slot with <img src="..." alt="..."> -->
+                <div class="figures">
+                    <figure><a href="/devlog/DevlogArticle01Picture007.png?v=dfb0dafe" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture007.png?v=dfb0dafe" width="1920" height="1152" alt="Picture 2, sprites only (PMG): small, carefully drawn details that sit on top of the bitmap" loading="lazy"></a><figcaption><b>2a</b> Sprites only (PMG)</figcaption></figure>
+                    <figure><a href="/devlog/DevlogArticle01Picture008.png?v=902ff74e" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture008.png?v=902ff74e" width="1920" height="1152" alt="Picture 2, bitmap only: background and shapes, simpler where the sprites will cover it" loading="lazy"></a><figcaption><b>2b</b> Bitmap only</figcaption></figure>
+                    <figure><a href="/devlog/DevlogArticle01Picture009.png?v=1e915730" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture009.png?v=1e915730" width="1920" height="1152" alt="Picture 2, all layers combined: the finished Atari XL/XE picture" loading="lazy"></a><figcaption><b>2c</b> All layers combined</figcaption></figure>
+                </div>
+
+                <p>Here it's the other way round: the sprites are above the bitmap. The bitmap does the background and
+                    the shapes, and the sprites add highlights and details in colours there's no room for in the row
+                    anymore. That's why the sprites (2a) are drawn much more carefully here, since you see every pixel of
+                    them, while the bitmap (2b) is simpler in those spots, sometimes even empty.</p>
+
+                <p>This one's harder. A sprite has one colour per row and has to fit in 8, 16 or 32 pixels. Every move
+                    between rows costs DLI time, and you can't change the order of overlapping sprites with layers,
+                    because the hardware decides it. My favourite trick: leave the first line of a row empty for a sprite
+                    that moves or changes colour. The DLI then gets a whole extra line. Reusing colours between rows helps
+                    too, because a colour that doesn't change costs nothing.</p>
+
+                <p>You can also mix: two pairs under the bitmap, two above, and the other way round one row down. The
+                    plugin assigns the players itself, and when it can't be done (say, three pairs under and one above),
+                    it lights up red.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">10</span>
+                    <h2>Does it match the Atari?</h2>
+                </div>
+
+                <p>Check doesn't guess. It uses the same code generator as the export and simulates every DLI cycle by
+                    cycle, including the moments when ANTIC takes memory access away from the CPU. I measured the timings
+                    in Altirra with small test programs. Then I compared Check's predictions with the emulator on all the
+                    test files, including deliberately overloaded ones. Difference: 0 pixels. The heaviest test changed
+                    20 registers between every pair of rows, and 30,720 out of 30,720 pixels matched.</p>
+
+                <p>One caveat: it's all calibrated for PAL and the XL/XE OS. I haven't checked it on real hardware
+                    yet.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">11</span>
+                    <h2>Wrapping up</h2>
+                </div>
+
+                <p>The plugin doesn't remove the Atari's limits, because you can't. What it does is show them right
+                    away, before I even save the file. Instead of compiling and sighing, I hit F1, fix, F1, F3 and the
+                    picture runs in the emulator. Where to hide a sprite, where to leave an empty line and which colour
+                    to let go of is still up to me.</p>
+
+                <p><strong>I use it every day for the Wittich graphics. I then import the data from the plugin into the
+                    Wittich game editor, where it's really comfortable to keep working on them with the actual game
+                    screens in mind.</strong></p>
+
+                <p>In 2026 I also entered four pictures made with <strong>AnarchyPixel</strong> at Atari demoscene
+                    parties:</p>
+
+                <div class="awards">
+                    <a class="award" href="https://demozoo.org/graphics/395416/" target="_blank" rel="noreferrer"><img src="/devlog/awards/Dive.png?v=cd3f33e2" alt="Dive – Atari XL/XE pixel art by Insert, 1st place at Silly Venture SE 2026" loading="lazy"><b>1st</b><span class="award-place">place</span><span class="award-title">Dive</span>Silly Venture SE 2026</a>
+                    <a class="award" href="https://demozoo.org/graphics/400692/" target="_blank" rel="noreferrer"><img src="/devlog/awards/Undertow.png?v=4dd839fd" alt="Undertow – Atari XL/XE pixel art by Insert, 2nd place at Silly Venture WE 2026" loading="lazy"><b>2nd</b><span class="award-place">place</span><span class="award-title">Undertow</span>Silly Venture WE 2026</a>
+                    <a class="award" href="https://demozoo.org/graphics/394298/" target="_blank" rel="noreferrer"><img src="/devlog/awards/lick.png?v=d714cd0e" alt="Lick – Atari XL/XE pixel art by Insert, 3rd place at Lost Party 2026" loading="lazy"><b>3rd</b><span class="award-place">place</span><span class="award-title">Lick</span>Lost Party 2026</a>
+                    <a class="award" href="https://demozoo.org/graphics/394300/" target="_blank" rel="noreferrer"><img src="/devlog/awards/whimsy.png?v=048a199d" alt="Whimsy – Atari XL/XE pixel art by Insert, 5th place at Lost Party 2026" loading="lazy"><b>5th</b><span class="award-place">place</span><span class="award-title">Whimsy</span>Lost Party 2026</a>
+                </div>
+                <p><a href="https://www.sillyventure.eu/" target="_blank" rel="noreferrer">Silly Venture</a> ·
+                    <a href="https://www.lostparty.pl/" target="_blank" rel="noreferrer">Lost Party</a> ·
+                    <a href="/#demoscene">my work in the Demoscene gallery</a></p>
+
+                <p>Where can you get the plugin? Unfortunately, nowhere yet. <strong>The plugin is at an early stage and first I want to fix the bugs
+                    and annoyances that come up in everyday work.</strong></p>
+
+
+                <p class="signature">Insert/Anarchydev</p>
+
+                <div class="next-teaser">
+                    <span class="next-teaser-kicker">Coming next</span>
+                    <p class="next-teaser-q">Is this the only interesting tool we use to make games?</p>
+                    <p class="next-teaser-a"><strong>Of course not.</strong> Besides a very polished editor for the
+                        whole game, we use a few other handy tools. Some of them, I won't hide it, are pretty unusual
+                        because of my health and age (my eyesight keeps getting worse and I can't sit for long).</p>
+                    <p class="next-teaser-more">More on that in the next articles.</p>
+                </div>
+
+                <div class="feedback-cta" data-track-area="devlog_feedback">
+                    <p class="feedback-title">Enjoyed this article?</p>
+                    <p>If you'd like to read more articles in the Devlog, be sure to let us know! Follow our
+                        <a href="https://www.facebook.com/AnarchyDevGames/" target="_blank" rel="noreferrer">Facebook page</a> and tell us there, on the Atari forums
+                        (<a href="https://forums.atariage.com/topic/394528-wittich-%E2%80%93-new-original-game-for-atari-xlxe-%E2%80%93-release-2027/" target="_blank" rel="noreferrer">AtariAge</a>,
+                        <a href="https://www.atari.org.pl/forum/viewtopic.php?pid=328506#p328506" target="_blank" rel="noreferrer">Atari.org.pl</a>,
+                        <a href="https://atarionline.pl/forum/comments.php?DiscussionID=8467" target="_blank" rel="noreferrer">AtariOnline.pl</a>)
+                        or on our <a href="https://discord.gg/da7KRVg4D2" target="_blank" rel="noreferrer">Discord server</a>.</p>
+                    <div class="feedback-links">
+                        <a class="feedback-btn feedback-btn-main" href="https://www.facebook.com/AnarchyDevGames/" target="_blank" rel="noreferrer"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                        <a class="feedback-btn feedback-btn-main" href="https://discord.gg/da7KRVg4D2" target="_blank" rel="noreferrer"><i class="fa-brands fa-discord"></i> Discord</a>
+                        <a class="feedback-btn" href="https://forums.atariage.com/topic/394528-wittich-%E2%80%93-new-original-game-for-atari-xlxe-%E2%80%93-release-2027/" target="_blank" rel="noreferrer"><i class="fa-solid fa-comments"></i> AtariAge</a>
+                        <a class="feedback-btn" href="https://www.atari.org.pl/forum/viewtopic.php?pid=328506#p328506" target="_blank" rel="noreferrer"><i class="fa-solid fa-comments"></i> Atari.org.pl</a>
+                        <a class="feedback-btn" href="https://atarionline.pl/forum/comments.php?DiscussionID=8467" target="_blank" rel="noreferrer"><i class="fa-solid fa-comments"></i> AtariOnline.pl</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="i18n" lang="pl">
+            <section class="chapter">
+                <p><strong>AnarchyPixel</strong> – rozszerzenie do <a href="https://aseprite.org/" target="_blank" rel="noreferrer">Aseprite</a> – powstał, bo potrzebowałem pełnoekranowych grafik do naszej gry
+                    <a href="/wittich/">Wittich</a>. Szybko się okazało, że nadaje się też do prac na party demoscenowe, więc teraz
+                    używam go do jednego i drugiego.</p>
+
+                <p>Krótko o problemie. Atari 8-bit ma w palecie 128 kolorów, ale w trybie, w którym da się sensownie
+                    rysować, na ekranie widać naraz pięć. Jak chcesz więcej, musisz je podmieniać w trakcie wyświetlania
+                    obrazu, np. co rząd znaków, czyli co osiem linii. Oczywiście ANTIC ma dużo więcej trybów, ale używa się ich raczej do
+                    specyficznych celów.</p>
+
+                <p>Do takiej grafiki (i nie tylko takiej) od lat jest <a href="https://g2f.atari8.info/" target="_blank" rel="noreferrer">Graph2Font</a>, program <strong>Tebe/MadTeam</strong>.
+                    Świetne narzędzie, powstało w nim mnóstwo dobrych prac i to on mnie zainspirował. Ale szczerze
+                    mówiąc, jego obsługa była dla mnie za trudna (widać to po <a href="https://demozoo.org/graphics/56535/" target="_blank" rel="noreferrer">mojej starej grafice z Silly Venture 2010</a>,
+                    gdzie próbowałem zmieniać rejestry kolorów w liniach). Chciałem rysować w programie, który znam, a liczenie
+                    rejestrów i cykli zostawić komputerowi.</p>
+
+                <p>Tym programem jest <a href="https://aseprite.org/" target="_blank" rel="noreferrer">Aseprite</a>,
+                    moim zdaniem najlepszy edytor do pixel artu. Ma warstwy, paletę indeksowaną i da się do niego pisać
+                    własne rozszerzenia. No to napisałem rozszerzenie, które uczy go Atari.</p>
+
+                <p>Niżej opisuję, jak to działa, i pokazuję dwie prace rozłożone na części. W jednej duszki siedzą pod
+                    bitmapą, w drugiej leżą na wierzchu.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">01</span>
+                    <h2>Tryb 4, czyli pięć kolorów</h2>
+                </div>
+
+                <img class="chapter-banner" src="/devlog/DevlogArticle01Picture001.png?v=6cac8ca2" width="1560" height="520" alt="Aseprite z AnarchyPixel: praca Whimsy z paletami rzędów po lewej i warstwami Atari po prawej" loading="lazy">
+
+                <p>Rysuję w trybie 4 ANTIC-a (w Basicu to GRAPHICS 12). To tryb znakowy, który udaje bitmapę:
+                    160 × 192 szerokich pikseli, ekran z 40 × 24 znaków po 4 × 8 pikseli.</p>
+
+                <p>W każdym rzędzie znaków jest tło i cztery kolory, ale jedna komórka 4 × 8 pokaże tylko tło, dwa
+                    kolory i jeden z dwóch pozostałych (o tym, który, decyduje bit inwersji znaku). Kto rysował w tym
+                    trybie, zna ten ból, kiedy w jednej kratce potrzebujesz trzeciego i czwartego koloru naraz.</p>
+
+                <p>Do tego font ma 128 znaków, a ekran 960 komórek. Każda inna komórka zjada kolejny znak, więc przy
+                    bogatym obrazku fonty też trzeba przełączać co rząd.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">02</span>
+                    <h2>Duszki</h2>
+                </div>
+
+                <p>Dodatkowe kolory dają duszki, czyli PMG. Są 4 playery po 8 pikseli szerokości (można je poszerzyć do
+                    16 albo 32) i 4 missile po 2 piksele. Każdy player ma jeden kolor, missile bierze kolor od swojego
+                    playera. Za to w pionie duszek ciągnie się przez cały ekran i w każdej linii może mieć inny
+                    kształt.</p>
+
+                <p>Bez dodatkowych trików daje to do 9 kolorów w rzędzie zamiast 5. Tylko że player to pasek ośmiu pikseli w jednym
+                    kolorze, więc malować się nim nie da. Da się za to dołożyć kolor dokładnie tam, gdzie bitmapie go
+                    brakuje.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">03</span>
+                    <h2>Przestawianie duszków w locie</h2>
+                </div>
+
+                <p>Osiem pasków na cały ekran to mało, więc duszki przestawia się w trakcie rysowania obrazu. Robi to
+                    przerwanie DLI na końcu rzędu: zmienia pozycję, szerokość i kolor duszków, a przy okazji kolory
+                    bitmapy, tło, font i priorytet. W <strong>AnarchyPixel</strong> każdy player i każdy missile może być użyty raz
+                    w każdym rzędzie, czyli do 24 razy na ekran.</p>
+
+                <p>Fajnie, dopóki nie policzysz czasu.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">04</span>
+                    <h2>114 cykli</h2>
+                </div>
+
+                <p>Na jedną linię obrazu procesor ma 114 cykli. Część zjada samo wejście w przerwanie, a w pierwszej
+                    linii każdego rzędu ANTIC pobiera dane znaków i procesor przez większość czasu po prostu czeka.
+                    W praktyce między rzędami zdążysz zmienić jakieś 4–6 rejestrów. Nie dwadzieścia.</p>
+
+                <p>Najgorsze jest to, że jak zmiana nie zdąży, nic się nie wysypie. Duszek przez pół linii zostanie
+                    w starym miejscu albo kolor przeskoczy w połowie. Zobaczysz to dopiero na emulatorze. Więc rysując,
+                    trzeba myśleć też o tym, kiedy dany piksel ma się pojawić.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">05</span>
+                    <h2>Aseprite + <strong>AnarchyPixel</strong></h2>
+                </div>
+
+                <img class="chapter-banner" src="/devlog/DevlogArticle01Picture002.png?v=690723c8" width="1560" height="520" alt="Aseprite z AnarchyPixel: praca Dive z paletami rzędów po lewej i warstwami Atari (bitmapa, playery PMG, missile, Check) po prawej" loading="lazy">
+
+                <p>Od razu jedno: plugin nie rysuje za mnie. Nie konwertuje zdjęć i nic nie generuje. Każdy piksel
+                    w tych pracach postawiłem ręcznie. <strong>AnarchyPixel</strong> mówi mi, co Atari pokaże, a czego nie, liczy za mnie
+                    cykle i robi z rysunku program.</p>
+
+                <p>To inne podejście niż <a href="https://github.com/ilmenit/rastaconverter" target="_blank" rel="noreferrer">RastaConverter</a>
+                    Ilmenita. Rasta dostaje gotowy obrazek i sama szuka, jak go najwierniej pokazać na Atari, więc
+                    o kolorach decyduje algorytm. U mnie decyduję ja, a plugin sprawdza, czy sprzęt da radę.</p>
+
+                <p>Rysuję na płótnie 160 × 192 z paletą Atari PAL. Warstwy plugin rozpoznaje po nazwie:</p>
+
+                <table class="spec">
+                    <tr><th><code>background</code></th><td>kolor tła każdego rzędu</td></tr>
+                    <tr><th><code>bitmap</code></th><td>właściwy obraz (może być kilka takich warstw)</td></tr>
+                    <tr><th><code>pmg1..pmg4</code></th><td>playery (<code>pmg1x2</code>, <code>pmg1x4</code> to szersze wersje)</td></tr>
+                    <tr><th><code>missiles</code></th><td>wszystkie missile na jednej warstwie</td></tr>
+                    <tr><th><code>Check</code></th><td>nakładka z diagnozą</td></tr>
+                </table>
+
+                <p>A potem używam dwóch klawiszy:</p>
+
+                <div class="keys">
+                    <div class="key-card">
+                        <span class="keycap">F1</span>
+                        <h3>Check</h3>
+                        <p>Plugin robi eksport w pamięci, symuluje Atari i porównuje wynik z moim rysunkiem. Piksele,
+                            które na Atari wyjdą inaczej, dostają magentową kratkę, a każdy rząd lampkę: zieloną, żółtą
+                            albo czerwoną. Poprawiam, znowu F1 i tak do skutku, aż wszystko świeci na zielono.</p>
+                    </div>
+                    <div class="key-card">
+                        <span class="keycap">F3</span>
+                        <h3>Export to XEX</h3>
+                        <p>Plugin generuje program w Mad Pascalu (display lista, DLI, ekran, fonty, duszki), kompiluje go
+                            <a href="https://github.com/tebe6502/Mad-Pascal" target="_blank" rel="noreferrer">Mad Pascalem</a>
+                            i <a href="https://github.com/tebe6502/Mad-Assembler" target="_blank" rel="noreferrer">MADS-em</a>
+                            i odpala w <a href="https://www.virtualdub.org/altirra.html" target="_blank" rel="noreferrer">Altirze</a>.
+                            Dzięki temu widzę obrazek na Atari w trakcie pracy, a nie dopiero na końcu. Wygenerowany kod
+                            można też wziąć do swojej gry albo dema.</p>
+                    </div>
+                </div>
+
+                <p>Najbardziej lubię to, jak plugin ogarnia missile. Rysuję je wszystkie na jednej warstwie,
+                    w dowolnych kolorach, a on w każdym rzędzie sam dzieli je na sprzętowe missile, dobiera szerokość
+                    i kolor. Jak missile'i zabraknie, wybiera wersję, która najmniej psuje obrazek.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">06</span>
+                    <h2>Jak czytać screeny z Check</h2>
+                </div>
+
+                <p>Większość ilustracji to zrzuty z Aseprite z włączoną nakładką Check. Po lewej, w każdym rzędzie, są
+                    małe kwadraciki: kolor tła i kolory, których ten rząd używa na Atari. Jak dałem za dużo kolorów,
+                    te nadmiarowe stoją za czerwoną kreską. Po prawej każdy rząd ma lampkę:</p>
+
+                <div class="lamps">
+                    <div class="lamp lamp-green"><i></i><b>Zielona</b><span>na Atari będzie dokładnie tak samo jak w Aseprite,</span></div>
+                    <div class="lamp lamp-yellow"><i></i><b>Żółta</b><span>część pikseli może migać między ramkami,</span></div>
+                    <div class="lamp lamp-red"><i></i><b>Czerwona</b><span>coś nie przejdzie, np. za dużo kolorów albo DLI nie zdąży.</span></div>
+                </div>
+
+                <p>Magentowa kratka na obrazku to piksel, który na Atari wyjdzie inaczej, a żółta to taki, który może
+                    się różnić w niektórych ramkach. Na screenach z gotowych prac są same zielone lampki, na tych
+                    z etapów pracy zobaczysz też czerwone.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">07</span>
+                    <h2>Nad czy pod bitmapą</h2>
+                </div>
+
+                <img class="chapter-banner" src="/devlog/DevlogArticle01Picture003.png?v=8d8c222a" width="1560" height="520" alt="Dwa zestawy warstw w Aseprite: po lewej bitmapa nad warstwami PMG (duszki pod bitmapą), po prawej warstwy PMG nad bitmapą (duszki na wierzchu)" loading="lazy">
+
+                <p>Duszki mogą być nad kolorami bitmapy albo pod nimi (rejestr PRIOR). W <strong>AnarchyPixel</strong> ustawiam to
+                    kolejnością warstw: duszek nad bitmapą zakrywa obraz, a duszek pod bitmapą widać tylko tam, gdzie
+                    jest tło. <strong>AnarchyPixel</strong> obsługuje w jednym rzędzie trzy układy: wszystkie duszki nad,
+                    wszystkie pod albo dwie pary nad i dwie pod (para to player i jego missile). Sprzęt ma jeszcze
+                    jeden, w którym duszki wchodzą między kolory bitmapy, ale plugin go nie używa. DLI może zmieniać
+                    układ co rząd. Dwie prace poniżej to dwa skrajne przypadki.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">08</span>
+                    <h2>Praca 1: duszki pod bitmapą</h2>
+                </div>
+
+                <!-- ILUSTRACJE: zamień .figure-slot na <img src="..." alt="..."> -->
+                <div class="figures">
+                    <figure><a href="/devlog/DevlogArticle01Picture004.png?v=6bf45343" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture004.png?v=6bf45343" width="1920" height="1152" alt="Praca 1, same duszki (PMG): bloki koloru leżące pod bitmapą" loading="lazy"></a><figcaption><b>1a</b> Same duszki (PMG)</figcaption></figure>
+                    <figure><a href="/devlog/DevlogArticle01Picture005.png?v=643e1f8c" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture005.png?v=643e1f8c" width="1920" height="1152" alt="Praca 1, sama bitmapa z dziurami w kolorze tła, przez które prześwitują duszki" loading="lazy"></a><figcaption><b>1b</b> Sama bitmapa</figcaption></figure>
+                    <figure><a href="/devlog/DevlogArticle01Picture006.png?v=99f6f9fa" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture006.png?v=99f6f9fa" width="1920" height="1152" alt="Praca 1, wszystkie warstwy razem: gotowy obraz na Atari XL/XE" loading="lazy"></a><figcaption><b>1c</b> Wszystkie warstwy razem</figcaption></figure>
+                </div>
+
+                <p>Tu wszystkie duszki są pod bitmapą, więc widać je tylko tam, gdzie bitmapa ma tło. Kontur robi
+                    bitmapa, a duszek tylko wypełnia dziury kolorem. Dlatego same duszki (1a) wyglądają jak brzydkie
+                    bloki i w ogóle mi to nie przeszkadza. Bitmapa (1b) ma dziury dokładnie tam, gdzie ma wejść dodatkowy
+                    kolor. Razem (1c) rząd ma więcej kolorów, niż daje tryb 4, a kształtu duszków nie widać.</p>
+
+                <p>Są dwie pułapki. Piksel bitmapy w kolorze tła swojego rzędu jest dla Atari tłem, więc duszek przez
+                    niego prześwituje (Check to wyłapuje). A missile pod bitmapą rysuję normalnie na wierzchu, tam gdzie
+                    mają być widoczne, i dopiero przy eksporcie plugin wycina pod nimi dziury w bitmapie. Plik .aseprite
+                    zostaje nietknięty.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">09</span>
+                    <h2>Praca 2: duszki na wierzchu</h2>
+                </div>
+
+                <!-- ILUSTRACJE: zamień .figure-slot na <img src="..." alt="..."> -->
+                <div class="figures">
+                    <figure><a href="/devlog/DevlogArticle01Picture007.png?v=dfb0dafe" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture007.png?v=dfb0dafe" width="1920" height="1152" alt="Praca 2, same duszki (PMG): drobne, starannie narysowane detale leżące na bitmapie" loading="lazy"></a><figcaption><b>2a</b> Same duszki (PMG)</figcaption></figure>
+                    <figure><a href="/devlog/DevlogArticle01Picture008.png?v=902ff74e" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture008.png?v=902ff74e" width="1920" height="1152" alt="Praca 2, sama bitmapa: tło i bryły, prostsze tam, gdzie przykryją je duszki" loading="lazy"></a><figcaption><b>2b</b> Sama bitmapa</figcaption></figure>
+                    <figure><a href="/devlog/DevlogArticle01Picture009.png?v=1e915730" target="_blank" rel="noopener"><img src="/devlog/DevlogArticle01Picture009.png?v=1e915730" width="1920" height="1152" alt="Praca 2, wszystkie warstwy razem: gotowy obraz na Atari XL/XE" loading="lazy"></a><figcaption><b>2c</b> Wszystkie warstwy razem</figcaption></figure>
+                </div>
+
+                <p>Tu odwrotnie: duszki są nad bitmapą. Bitmapa robi tło i bryły, a duszki dokładają światła i detale
+                    w kolorach, na które w rzędzie nie ma już miejsca. Dlatego duszki (2a) są tu rysowane dużo
+                    staranniej, bo widać każdy ich piksel, a bitmapa (2b) w tych miejscach jest prostsza, czasem wręcz
+                    pusta.</p>
+
+                <p>Ta wersja jest trudniejsza. Duszek w rzędzie ma jeden kolor i musi się zmieścić w 8, 16 albo 32
+                    pikselach. Każde przesunięcie między rzędami kosztuje czas DLI, a kolejności nakładających się
+                    duszków nie zmienisz warstwami, bo ustala ją sprzęt. Mój ulubiony trik: zostawić pierwszą linię rzędu
+                    pustą dla duszka, który się przesuwa albo zmienia kolor. DLI ma wtedy całą linię więcej. Pomaga też
+                    powtarzanie kolorów między rzędami, bo kolor, który się nie zmienia, nic nie kosztuje.</p>
+
+                <p>Można też mieszać: dwie pary pod bitmapą, dwie nad, a rząd niżej na odwrót. Plugin sam przydziela
+                    playery, a jak się nie da (np. trzy pary pod i jedna nad), świeci na czerwono.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">10</span>
+                    <h2>Czy to się zgadza z Atari?</h2>
+                </div>
+
+                <p>Check nie zgaduje. Używa tego samego generatora kodu co eksport i symuluje każde DLI cykl po cyklu,
+                    razem z momentami, w których ANTIC zabiera procesorowi pamięć. Czasy zmierzyłem w Altirze małymi
+                    programami testowymi. Potem porównałem przewidywania Check z emulatorem na wszystkich plikach
+                    testowych, także tych celowo przeładowanych. Różnica: 0 pikseli. Najcięższy test zmieniał
+                    20 rejestrów między każdą parą rzędów i wyszło 30 720 na 30 720 pikseli zgodnych.</p>
+
+                <p>Jedno zastrzeżenie: wszystko jest skalibrowane pod PAL i system XL/XE. Na prawdziwym sprzęcie jeszcze
+                    tego nie sprawdzałem.</p>
+            </section>
+
+            <section class="chapter">
+                <div class="chapter-head">
+                    <span class="chapter-num">11</span>
+                    <h2>Na koniec</h2>
+                </div>
+
+                <p>Ograniczeń Atari plugin nie usuwa, bo się nie da. Pokazuje je za to od razu, zanim zapiszę plik.
+                    Zamiast kompilować i wzdychać, robię F1, poprawiam, F1, F3 i obrazek chodzi w emulatorze. A gdzie
+                    schować duszka, gdzie zostawić pustą linię i który kolor odpuścić, to i tak zostaje na mojej
+                    głowie.</p>
+
+                <p><strong>Na co dzień robię w nim grafiki do Wittich. Dane z pluginu importuję potem do edytora gry
+                    Wittich, w którym bardzo wygodnie obrabiam je dalej, już pod kątem ekranów w grze.</strong></p>
+
+                <p>W 2026 roku wystawiłem też cztery prace zrobione w <strong>AnarchyPixel</strong> na atarowskich
+                    party demoscenowych:</p>
+
+                <div class="awards">
+                    <a class="award" href="https://demozoo.org/graphics/395416/" target="_blank" rel="noreferrer"><img src="/devlog/awards/Dive.png?v=cd3f33e2" alt="Dive – grafika na Atari XL/XE, 1. miejsce na Silly Venture SE 2026" loading="lazy"><b>1.</b><span class="award-place">miejsce</span><span class="award-title">Dive</span>Silly Venture SE 2026</a>
+                    <a class="award" href="https://demozoo.org/graphics/400692/" target="_blank" rel="noreferrer"><img src="/devlog/awards/Undertow.png?v=4dd839fd" alt="Undertow – grafika na Atari XL/XE, 2. miejsce na Silly Venture WE 2026" loading="lazy"><b>2.</b><span class="award-place">miejsce</span><span class="award-title">Undertow</span>Silly Venture WE 2026</a>
+                    <a class="award" href="https://demozoo.org/graphics/394298/" target="_blank" rel="noreferrer"><img src="/devlog/awards/lick.png?v=d714cd0e" alt="Lick – grafika na Atari XL/XE, 3. miejsce na Lost Party 2026" loading="lazy"><b>3.</b><span class="award-place">miejsce</span><span class="award-title">Lick</span>Lost Party 2026</a>
+                    <a class="award" href="https://demozoo.org/graphics/394300/" target="_blank" rel="noreferrer"><img src="/devlog/awards/whimsy.png?v=048a199d" alt="Whimsy – grafika na Atari XL/XE, 5. miejsce na Lost Party 2026" loading="lazy"><b>5.</b><span class="award-place">miejsce</span><span class="award-title">Whimsy</span>Lost Party 2026</a>
+                </div>
+                <p><a href="https://www.sillyventure.eu/" target="_blank" rel="noreferrer">Silly Venture</a> ·
+                    <a href="https://www.lostparty.pl/" target="_blank" rel="noreferrer">Lost Party</a> ·
+                    <a href="/#demoscene">moje prace w galerii Demoscene</a></p>
+
+                <p>Gdzie pobrać ten plugin? Na razie niestety nigdzie. <strong>Plugin jest na wczesnym etapie i najpierw chcę poprawić błędy
+                    i niewygody, które wychodzą przy codziennej pracy.</strong></p>
+
+
+                <p class="signature">Insert/Anarchydev</p>
+
+                <div class="next-teaser">
+                    <span class="next-teaser-kicker">Zapowiedź</span>
+                    <p class="next-teaser-q">Czy to jedyne ciekawe narzędzie, którego używamy do robienia gier?</p>
+                    <p class="next-teaser-a"><strong>Oczywiście nie.</strong> Poza bardzo dopracowanym edytorem całej
+                        gry używamy jeszcze kilku przydatnych narzędzi. Niektóre, nie ukrywam, z racji mojego stanu
+                        zdrowia
+                        i wieku (coraz gorzej widzę i nie mogę długo siedzieć) są dość specyficzne.</p>
+                    <p class="next-teaser-more">Ale o tym w kolejnych artykułach.</p>
+                </div>
+
+                <div class="feedback-cta" data-track-area="devlog_feedback">
+                    <p class="feedback-title">Podobał Ci się ten artykuł?</p>
+                    <p>Jeśli chcesz czytać kolejne artykuły w Devlogu, koniecznie daj nam o tym znać!
+                        Obserwuj nasz <a href="https://www.facebook.com/AnarchyDevGames/" target="_blank" rel="noreferrer">profil na Facebooku</a> i napisz nam o tym na Facebooku, na forach
+                        atarowskich (<a href="https://forums.atariage.com/topic/394528-wittich-%E2%80%93-new-original-game-for-atari-xlxe-%E2%80%93-release-2027/" target="_blank" rel="noreferrer">AtariAge</a>,
+                        <a href="https://www.atari.org.pl/forum/viewtopic.php?pid=328506#p328506" target="_blank" rel="noreferrer">Atari.org.pl</a>,
+                        <a href="https://atarionline.pl/forum/comments.php?DiscussionID=8467" target="_blank" rel="noreferrer">AtariOnline.pl</a>)
+                        i na naszym <a href="https://discord.gg/da7KRVg4D2" target="_blank" rel="noreferrer">serwerze Discord</a>.</p>
+                    <div class="feedback-links">
+                        <a class="feedback-btn feedback-btn-main" href="https://www.facebook.com/AnarchyDevGames/" target="_blank" rel="noreferrer"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                        <a class="feedback-btn feedback-btn-main" href="https://discord.gg/da7KRVg4D2" target="_blank" rel="noreferrer"><i class="fa-brands fa-discord"></i> Discord</a>
+                        <a class="feedback-btn" href="https://forums.atariage.com/topic/394528-wittich-%E2%80%93-new-original-game-for-atari-xlxe-%E2%80%93-release-2027/" target="_blank" rel="noreferrer"><i class="fa-solid fa-comments"></i> AtariAge</a>
+                        <a class="feedback-btn" href="https://www.atari.org.pl/forum/viewtopic.php?pid=328506#p328506" target="_blank" rel="noreferrer"><i class="fa-solid fa-comments"></i> Atari.org.pl</a>
+                        <a class="feedback-btn" href="https://atarionline.pl/forum/comments.php?DiscussionID=8467" target="_blank" rel="noreferrer"><i class="fa-solid fa-comments"></i> AtariOnline.pl</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div class="article-end">
+        <a class="back-link" href="/devlog/" data-keep-lang><span class="i18n" lang="en">&larr; All Devlog articles</span><span class="i18n" lang="pl">&larr; Wszystkie artykuły w Devlogu</span></a>
+    </div>
+
+    <!-- CTA: śledzenie gry Wittich i kolejnych artykułów -->
+    <section class="article-cta" data-track-area="devlog_cta">
+        <div class="article-cta-inner">
+            <div class="article-cta-copy i18n" lang="en">
+                <span class="article-cta-kicker">This is just the beginning</span>
+                <h2>Follow the development of Wittich</h2>
+                <p>Wittich, our new action game for Atari XL/XE, comes out in 2027. We post progress updates on
+                    Facebook. More Devlog articles are
+                    coming soon, too.</p>
+            </div>
+            <div class="article-cta-copy i18n" lang="pl">
+                <span class="article-cta-kicker">To dopiero początek</span>
+                <h2>Śledź rozwój gry Wittich</h2>
+                <p>Wittich, nasza nowa gra akcji na Atari XL/XE, ukaże się w 2027 roku. Na Facebooku na bieżąco
+                    pokazujemy postępy prac. A w Devlogu już
+                    wkrótce kolejne artykuły.</p>
+            </div>
+            <div class="article-cta-actions">
+                <a class="cta-btn cta-btn-light" href="/wittich/"><span class="i18n" lang="en">Discover Wittich</span><span class="i18n" lang="pl">Poznaj grę Wittich</span></a>
+                <a class="cta-btn cta-btn-dark" href="https://www.facebook.com/AnarchyDevGames/" target="_blank" rel="noreferrer"><i class="fa-brands fa-facebook"></i>&nbsp; <span class="i18n" lang="en">Follow on Facebook</span><span class="i18n" lang="pl">Obserwuj na Facebooku</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer – ten sam co na stronie głównej -->
+    <footer style="padding: 40px 0; border-top: 1px solid #111; text-align: center;">
+        <div class="container">
+            <img src="/images/AnarchyDevLogo.png?v=8005fb1b" alt="AnarchyDev Games" class="footer-logo">
+            <div class="footer-social social-icons"
+                style="margin-bottom: 20px; font-size: 1.5rem; display: flex; justify-content: center; gap: 20px;">
+                <a href="https://www.facebook.com/AnarchyDevGames/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@anarchydevgames4747" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://discord.gg/da7KRVg4D2" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+            </div>
+            <p style="color: #444;">&copy; 2026 anarchydev.games. All rights reserved.</p>
+            <p class="footer-links"><a href="/privacy/">Privacy policy</a> &middot; <a href="#" data-cookie-settings>Cookie settings</a></p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

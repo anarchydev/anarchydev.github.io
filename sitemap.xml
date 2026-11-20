@@ -16,4 +16,13 @@
     <image:image><image:loc>https://anarchydev.games/wittich/images/screen-n1.png</image:loc></image:image>
     <image:image><image:loc>https://anarchydev.games/wittich/images/screen-n6.png</image:loc></image:image>
   </url>
+  <url>
+    <loc>https://anarchydev.games/devlog/</loc>
+    <lastmod>2026-11-17</lastmod>
+  </url>
+  <url>
+    <loc>https://anarchydev.games/devlog/anarchy-in-114-cycles/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <image:image><image:loc>https://anarchydev.games/devlog/DevlogArticlePicture01.png</image:loc></image:image>
+  </url>
 </urlset>

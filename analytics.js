@@ -9,7 +9,10 @@
  *  - Dane trafiają do GA tylko z produkcji (PROD_HOSTS); lokalnie baner działa, a zdarzenia
  *    są tylko wypisywane w konsoli przeglądarki – do testów.
  *  - Poza automatycznym pomiarem GA (odsłony, przewijanie, linki wychodzące) wysyłamy własne
- *    zdarzenia: social_click, email_click, wittich_click.
+ *    zdarzenia: social_click, email_click, wittich_click, forum_click, article_click,
+ *    article_read (25/50/75/100% artykułu) i language_switch (z devlog/lang.js).
+ *  - Strony z <body data-content-group="..."> trafiają w GA do tej grupy treści (np. devlog).
+ *  - Obszar kliknięcia (link_area) można nadać atrybutem data-track-area na dowolnym elemencie.
  */
 (function () {
   'use strict';
@@ -51,7 +54,10 @@
       ad_personalization: 'denied'
     });
     gtag('js', new Date());
-    gtag('config', GA_ID, { cookie_expires: COOKIE_MAX_AGE });
+    var config = { cookie_expires: COOKIE_MAX_AGE };
+    var group = document.body && document.body.getAttribute('data-content-group');
+    if (group) config.content_group = group;
+    gtag('config', GA_ID, config);
     var s = document.createElement('script');
     s.async = true;
     s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
@@ -77,9 +83,13 @@
     if (!isProd) { console.info('[analytics] test: zdarzenie', name, params || {}); return; }
     gtag('event', name, params || {});
   }
+  // Dla innych skryptów strony (np. przełącznik języka w Devlogu).
+  window.siteTrack = track;
 
   // --- własne zdarzenia (kliknięcia) ------------------------------------------------------
   function linkArea(a) {
+    var tagged = a.closest('[data-track-area]');
+    if (tagged) return tagged.getAttribute('data-track-area');
     var area = a.closest('header, nav, footer, section[id], .hero');
     if (!area) return 'page';
     return area.id || area.tagName.toLowerCase();
@@ -90,6 +100,15 @@
     if (!a) return;
     var href = a.getAttribute('href');
     var area = linkArea(a);
+    if (a.hasAttribute('data-track-article')) {
+      track('article_click', { article: a.getAttribute('data-track-article'), link_area: area });
+      return;
+    }
+    var forum = href.match(/(forums\.atariage\.com|atari\.org\.pl|atarionline\.pl)/i);
+    if (forum) {
+      track('forum_click', { forum: forum[1].replace(/^forums\./, '').toLowerCase(), link_area: area });
+      return;
+    }
     var m = href.match(/(facebook\.com|youtube\.com|discord\.gg|discord\.com)/i);
     if (m) {
       track('social_click', { network: m[1].split('.')[0].toLowerCase(), link_area: area });
@@ -99,6 +118,28 @@
       track('wittich_click', { link_area: area });
     }
   }, true);
+
+  // --- czytanie artykułu: 25 / 50 / 75 / 100% treści ----------------------------------------
+  // Działa na stronach z elementem [data-track-article-body="nazwa-artykułu"].
+  function watchArticle() {
+    var body = document.querySelector('[data-track-article-body]');
+    if (!body) return;
+    var article = body.getAttribute('data-track-article-body');
+    var sent = {};
+    function check() {
+      var rect = body.getBoundingClientRect();
+      if (rect.height <= 0) return;
+      var seen = (window.innerHeight - rect.top) / rect.height * 100;
+      [25, 50, 75, 100].forEach(function (p) {
+        if (seen >= p && !sent[p] && getConsent() === 'granted') {
+          sent[p] = true;
+          track('article_read', { article: article, percent: p, language: document.documentElement.lang });
+        }
+      });
+    }
+    window.addEventListener('scroll', check, { passive: true });
+    check();
+  }
 
   // --- baner zgody ---------------------------------------------------------------------
   var CSS =
@@ -171,6 +212,7 @@
 
   // --- start ---------------------------------------------------------------------------
   function init() {
+    watchArticle();
     var consent = getConsent();
     if (consent === 'granted') loadGA();
     else if (consent !== 'denied') showBanner();
